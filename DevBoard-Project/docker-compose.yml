@@ -1,0 +1,80 @@
+services:
+  # === FRONTEND (Nginx) ===
+  frontend:
+    build: ./frontend
+    container_name: devboard-frontend
+    ports:
+      - "8080:80"
+    networks:
+      - frontend-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
+
+  # === BACKEND (Flask API) ===
+  backend:
+    build: ./backend
+    container_name: devboard-backend
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    networks:
+      - frontend-network
+      - backend-network
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+
+  # === DATENBANK (PostgreSQL) ===
+  db:
+    image: postgres:16-alpine
+    container_name: devboard-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+
+# === NETZWERKE (Isolation!) ===
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
+    internal: true # Kein Internetzugang!
+
+# === VOLUMES (Persistenz) ===
+volumes:
+  pgdata:

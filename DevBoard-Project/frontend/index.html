@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBoard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+               background: #0f172a; color: #e2e8f0; min-height: 100vh; padding: 2rem; }
+        h1 { text-align: center; margin-bottom: 2rem; font-size: 2rem;
+             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+             -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .add-form { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .add-form input { flex: 1; padding: 0.75rem 1rem; border: 1px solid #334155;
+                          border-radius: 8px; background: #1e293b; color: #e2e8f0;
+                          font-size: 1rem; outline: none; }
+        .add-form input:focus { border-color: #3b82f6; }
+        .add-form button { padding: 0.75rem 1.5rem; border: none; border-radius: 8px;
+                           background: #3b82f6; color: white; font-size: 1rem;
+                           cursor: pointer; font-weight: 600; }
+        .add-form button:hover { background: #2563eb; }
+        .task { display: flex; justify-content: space-between; align-items: center;
+                padding: 1rem; margin-bottom: 0.5rem; background: #1e293b;
+                border-radius: 8px; border: 1px solid #334155; }
+        .task .title { font-size: 1rem; }
+        .task .date { font-size: 0.75rem; color: #94a3b8; }
+        .task button { background: #ef4444; border: none; color: white;
+                       padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; }
+        .task button:hover { background: #dc2626; }
+        .empty { text-align: center; color: #64748b; padding: 3rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DevBoard</h1>
+        <div class="add-form">
+            <input type="text" id="taskInput" placeholder="Neuer Task...">
+            <button onclick="addTask()">Hinzufügen</button>
+        </div>
+        <div id="taskList"></div>
+    </div>
+    <script>
+        const API = '/api';
+
+        async function loadTasks() {
+            const res = await fetch(`${API}/tasks`);
+            const tasks = await res.json();
+            const list = document.getElementById('taskList');
+            if (tasks.length === 0) {
+                list.innerHTML = '<div class="empty">Keine Tasks vorhanden – erstelle einen!</div>';
+                return;
+            }
+            list.innerHTML = tasks.map(t => `
+                <div class="task">
+                    <div>
+                        <div class="title">${t.title}</div>
+                        <div class="date">${new Date(t.created_at).toLocaleString('de-CH')}</div>
+                    </div>
+                    <button onclick="deleteTask(${t.id})">Löschen</button>
+                </div>
+            `).join('');
+        }
+
+        async function addTask() {
+            const input = document.getElementById('taskInput');
+            const title = input.value.trim();
+            if (!title) return;
+            await fetch(`${API}/tasks`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title })
+            });
+            input.value = '';
+            loadTasks();
+        }
+
+        async function deleteTask(id) {
+            await fetch(`${API}/tasks/${id}`, { method: 'DELETE' });
+            loadTasks();
+        }
+
+        document.getElementById('taskInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        loadTasks();
+    </script>
+</body>
+</html>
