@@ -475,6 +475,22 @@
         opacity: 1;
         transform: translateY(0);
       }
+      .sources {
+        font-size: 0.75rem;
+        color: var(--text3);
+        margin-top: 0.5rem;
+        padding: 0.5rem 0.8rem;
+        background: var(--bg2);
+        border-radius: 6px;
+        border-left: 2px solid var(--accent3);
+      }
+      .sources a {
+        color: var(--accent3);
+        text-decoration: none;
+      }
+      .sources a:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -819,23 +835,29 @@
               <td><strong>AWS</strong></td>
               <td>ECS, Fargate, EKS</td>
               <td>
-                Serverloses Container-Hosting, Managed K8s, ECR, Auto-Scaling
+                Fully managed Container-Orchestrierung (ECS), serverloses Hosting (Fargate), Managed K8s (EKS), ECR
               </td>
             </tr>
             <tr>
               <td><strong>Azure</strong></td>
-              <td>ACI, AKS</td>
+              <td>ACI, AKS, Container Apps</td>
               <td>
-                Container on-demand, Managed K8s (kostenlose Control Plane), ACR
+                Container on-demand (ACI), Managed K8s mit kostenloser Control Plane (AKS), Serverless Container Apps, ACR
               </td>
             </tr>
             <tr>
               <td><strong>Google Cloud</strong></td>
               <td>Cloud Run, GKE</td>
-              <td>Serverless Containers, Autopilot-K8s, Artifact Registry</td>
+              <td>Fully managed Serverless-Plattform mit Scale-to-Zero (Cloud Run), Autopilot-K8s (GKE), GPU-Support für AI-Workloads, Artifact Registry</td>
             </tr>
           </table>
         </div>
+        <p class="sources">
+          Quellen:
+          <a href="https://aws.amazon.com/ecs/getting-started/">aws.amazon.com/ecs</a>,
+          <a href="https://azure.microsoft.com/en-us/products/container-instances">azure.microsoft.com/container-instances</a>,
+          <a href="https://cloud.google.com/run">cloud.google.com/run</a>
+        </p>
       </div>
       <div class="content-block reveal">
         <h3><span class="tag">C1F</span> Cloud-Anbieter Vergleich</h3>
@@ -854,33 +876,33 @@
             </tr>
             <tr>
               <td>Marktanteil</td>
-              <td>~31%</td>
-              <td>~25%</td>
-              <td>~11%</td>
+              <td>~30%</td>
+              <td>~23%</td>
+              <td>~13%</td>
             </tr>
             <tr>
               <td>Einstieg</td>
-              <td>Komplex, mega viele Optionen</td>
-              <td>Gute Microsoft-Integration</td>
-              <td>Am einfachsten</td>
+              <td>Komplex, 200+ Services</td>
+              <td>Gute Microsoft-Integration (O365, AD)</td>
+              <td>Am einfachsten (Cloud Run)</td>
             </tr>
             <tr>
               <td>Kosten</td>
-              <td>Free Tier 12 Monate</td>
-              <td>Free Tier 12 Monate</td>
-              <td>Günstigerer Free Tier</td>
+              <td>Free Tier 12 Mt., Savings Plans bis 72%</td>
+              <td>Free Tier 12 Mt., Hybrid Benefit für bestehende Lizenzen</td>
+              <td>Sustained-use Discounts bis 30%, Pay-per-Request</td>
             </tr>
             <tr>
               <td>K8s</td>
               <td>EKS (extra Service)</td>
-              <td>AKS (kostenlos)</td>
+              <td>AKS (kostenlose Control Plane)</td>
               <td>GKE Autopilot (sehr ausgereift)</td>
             </tr>
             <tr>
               <td>Vorteil</td>
-              <td>Grösstes Ökosystem</td>
-              <td>Hybrid mit Azure Arc</td>
-              <td>Bestes K8s + Serverless</td>
+              <td>Grösstes Ökosystem, Custom Chips (Graviton)</td>
+              <td>Hybrid mit Azure Arc, 100+ Compliance-Zertifizierungen</td>
+              <td>Bestes K8s (Erfinder!), Analytics + AI Leader</td>
             </tr>
             <tr>
               <td>Nachteil</td>
@@ -890,6 +912,11 @@
             </tr>
           </table>
         </div>
+        <p class="sources">
+          Quellen:
+          <a href="https://pilotcore.io/blog/aws-vs-azure-vs-google-cloud-comparison">pilotcore.io – AWS vs Azure vs GCP 2025</a>,
+          <a href="https://www.pluralsight.com/resources/blog/cloud/cloud-container-services-compared-aws-vs-azure-vs-gcp">pluralsight.com – Cloud Container Services Compared</a>
+        </p>
       </div>
       <div class="content-block reveal">
         <h3><span class="tag">C1E</span> Entscheidungsmatrix</h3>
@@ -973,7 +1000,13 @@
         </div>
         <p>
           <strong>Entscheid: Google Cloud Run.</strong> Einfachster Einstieg,
-          bester Free Tier, und K8s direkt dabei wenn man skalieren will.
+          bester Free Tier, Scale-to-Zero (man zahlt nur wenn Code läuft), und K8s direkt dabei
+          wenn man skalieren will. Ausserdem ist Google Cloud seit 2007 CO₂-neutral.
+        </p>
+        <p class="sources">
+          Quellen:
+          <a href="https://pilotcore.io/blog/aws-vs-azure-vs-google-cloud-comparison">pilotcore.io – AWS vs Azure vs GCP 2025</a>,
+          <a href="https://cloud.google.com/run">cloud.google.com/run</a>
         </p>
       </div>
       <div class="content-block reveal">
@@ -1018,21 +1051,26 @@
             </tr>
             <tr>
               <td><strong>Docker Compose</strong></td>
-              <td>Multi-Container auf einem Host via YAML</td>
-              <td>Entwicklung, Testing, Lernen</td>
+              <td>Multi-Container auf einem Host via YAML. Definiert Services, Netzwerke und Volumes</td>
+              <td>Entwicklung, Testing, Lernen, kleine Projekte</td>
             </tr>
             <tr>
               <td><strong>Kubernetes</strong></td>
-              <td>Auto-Scaling, Self-Healing, Rolling Updates</td>
-              <td>Produktion, grosse Systeme</td>
+              <td>Industriestandard: Auto-Scaling, Self-Healing, Rolling Updates. Laut CNCF nutzen 82% der Container-User K8s in Produktion (2025)</td>
+              <td>Produktion, grosse verteilte Systeme</td>
             </tr>
             <tr>
               <td><strong>Docker Swarm</strong></td>
-              <td>Dockers eigene Cluster-Lösung</td>
-              <td>Kleine Cluster (wird kaum noch genutzt)</td>
+              <td>Dockers eigene Cluster-Lösung, native Docker-CLI Integration</td>
+              <td>Kleine Cluster. Seit Docker Engine v29 (2025) gibt es Breaking Changes und Kompatibilitätsprobleme – das Ökosystem schrumpft, selbst Mirantis fokussiert jetzt auf K8s</td>
             </tr>
           </table>
         </div>
+        <p class="sources">
+          Quellen:
+          <a href="https://www.portainer.io/blog/docker-swarm-vs-kubernetes">portainer.io – Docker Swarm vs Kubernetes 2026</a>,
+          <a href="https://www.qovery.com/blog/kubernetes-vs-docker-what-are-the-differences">qovery.com – Kubernetes vs Docker</a>
+        </p>
       </div>
       <div class="content-block reveal">
         <h3><span class="tag">C2E</span> Public vs. Private Registry</h3>
