@@ -628,7 +628,7 @@
           nicht welche Container wir brauchen und wie die miteinander reden.
         </p>
         <p>
-          Wir haben uns für ein einfaches Task-Board entschieden => DevBoard.
+          Wir haben uns für ein einfaches Task-Board entschieden: das DevBoard.
           Damit kann man Tasks erstellen, anzeigen und löschen.
         </p>
         <h4>Funktionale Anforderungen</h4>
@@ -792,8 +792,8 @@
           wir ein Netzwerkdiagramm erstellt:
         </p>
         <div class="tip">
-          Erstellt mit <strong>draw.io</strong> => kostenloses Online-Tool,
-          gibt's auch als VS Code Extension.
+          Erstellt mit <strong>draw.io</strong>, einem kostenlosen Online-Tool,
+          das es auch als VS Code Extension gibt.
         </div>
         <div class="screenshot">
           <iframe
@@ -806,7 +806,7 @@
           <strong>Warum zwei Netzwerke?</strong> Das frontend-network ist nach
           aussen exponiert (Port 8080), aber das backend-network ist komplett
           intern (<code>internal: true</code>). PostgreSQL ist nie direkt vom
-          Browser erreichbar => nur Flask kann mit der DB reden.
+          Browser erreichbar, also kann nur Flask mit der Datenbank reden.
         </p>
       </div>
     </section>
@@ -982,21 +982,21 @@
             src="https://drive.google.com/file/d/1zypX4Oqn7mLjTjWNlp70sH8x1jFsaEt9/preview"
             width="640"
             height="480"></iframe>
-          <div class="caption">AWS => Score 3.15</div>
+          <div class="caption">AWS: Score 3.15</div>
         </div>
         <div class="screenshot">
           <iframe
             src="https://drive.google.com/file/d/1uVZgL-WMmqM1cEx1LpORCTw-Lg3Q6ufG/preview"
             width="640"
             height="480"></iframe>
-          <div class="caption">Azure => Score 3.55</div>
+          <div class="caption">Azure: Score 3.55</div>
         </div>
         <div class="screenshot">
           <iframe
             src="https://drive.google.com/file/d/1TkXMUJ0UHp5aXbT_wgRlcSxngOw9V3Dh/preview"
             width="640"
             height="480"></iframe>
-          <div class="caption">Google Cloud => Score 4.80</div>
+          <div class="caption">Google Cloud: Score 4.80</div>
         </div>
         <p>
           <strong>Entscheid: Google Cloud Run.</strong> Einfachster Einstieg,
@@ -1131,8 +1131,8 @@
           beheben.
         </div>
         <p>
-          Jetzt wird's praktisch. Wir haben die ganze App von Grund auf gebaut
-          => 3 Container, 2 Netzwerke, 1 Volume. Hier ist alles was wir gemacht
+          Jetzt wird's praktisch. Wir haben die ganze App von Grund auf gebaut:
+          3 Container, 2 Netzwerke, 1 Volume. Hier ist alles was wir gemacht
           haben:
         </p>
         <h4>Projektstruktur</h4>
@@ -1270,8 +1270,8 @@ server {
         <p>Secrets liegen in einer <code>.env</code> Datei, nicht im Code:</p>
         <h4>Docker Compose</h4>
         <p>
-          Das Herzstück => die <code>docker-compose.yml</code> bringt alles
-          zusammen. 3 Services, 2 Netzwerke, 1 Volume, Health-Checks, Resource
+          Das Herzstück ist die <code>docker-compose.yml</code>, die alles
+          zusammenbringt: 3 Services, 2 Netzwerke, 1 Volume, Health-Checks, Resource
           Limits und Restart Policies.
         </p>
         <details>
@@ -1366,16 +1366,16 @@ volumes:
             src="https://drive.google.com/file/d/1sCyln5AQ_tXS3HEkQY614BFDlf6tuAmT/preview"
             width="640"
             height="480"></iframe>
-          <div class="caption">DevBoard im Browser => Task erstellt</div>
+          <div class="caption">DevBoard im Browser: Task erfolgreich erstellt</div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/16xY4tfEM2qcrV_BocXSLoAA3ubXPJrFs/preview" width="640" height="480"></iframe>
-          <div class="caption">Health-Check => {"status": "healthy"}</div>
+          <div class="caption">Health-Check gibt zurück: {"status": "healthy"}</div>
         </div>
         <h4>Persistenz testen</h4>
         <p>
-          App komplett gestoppt und neu gestartet => Tasks waren dank pgdata
-          Volume noch da:
+          Die App wurde komplett gestoppt und neu gestartet. Die Tasks waren
+          dank des pgdata-Volumes noch vorhanden:
         </p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1Fd0JNriQEW3gERIxyEu51aCk6PY882Mq/preview" width="640" height="480"></iframe>
@@ -1394,26 +1394,26 @@ volumes:
         </p>
         <p>
           <strong>Fehler 1: Falscher Port im Nginx Proxy</strong><br />Port in
-          <code>nginx.conf</code> von 5000 auf 3000 geändert => Nginx kann
-          API-Requests nicht weiterleiten => 502 Bad Gateway:
+          <code>nginx.conf</code> von 5000 auf 3000 geändert, wodurch Nginx
+          die API-Requests nicht mehr weiterleiten konnte und ein 502 Bad Gateway auftrat:
         </p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1fTOJCFZfDBpeAFTW5GDTpfmR6ssKB2cH/preview" width="640" height="480"></iframe>
-          <div class="caption">502 Bad Gateway => falscher Proxy-Port</div>
+          <div class="caption">502 Bad Gateway durch falschen Proxy-Port</div>
         </div>
         <p>
-          <strong>Fix:</strong> Port zurück auf 5000, Container neu gebaut =>
-          läuft wieder.
+          <strong>Fix:</strong> Port auf 5000 zurückgesetzt und Container neu gebaut,
+          danach lief die App wieder.
         </p>
         <p>
           <strong>Fehler 2: Falsches DB-Passwort</strong><br />Passwort in
           <code>.env</code> geändert, aber PostgreSQL hatte das alte noch im
-          Volume => Mismatch:
+          Volume gespeichert, was zu einem Mismatch führte:
         </p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1SXsoZBDMXJk4IQW1TOf1IneW9bxpNUN4/preview" width="640" height="480"></iframe>
           <div class="caption">
-            Backend crashed => dependency failed to start
+            Backend abgestürzt: dependency failed to start
           </div>
         </div>
         <div class="screenshot">
@@ -1434,16 +1434,16 @@ volumes:
           dokumentieren.
         </div>
         <p>
-          Kompletten Lifecycle durchgespielt => Images pullen, Container
-          starten, stoppen, wieder starten:
+          Wir haben den kompletten Lifecycle durchgespielt: Images pullen, Container
+          starten, stoppen und wieder starten:
         </p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/14IngRgHnNCW4jRfmN73XQZcLKY0Wqlxo/preview" width="640" height="480"></iframe>
-          <div class="caption">Image-Management => pull, stop, start, ps</div>
+          <div class="caption">Image-Management: pull, stop, start, ps</div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1osr4PHcBMhpM3lk0Mc0BsIn2iQ4Vf8DH/preview" width="640" height="480"></iframe>
-          <div class="caption">docker images => lokale DevBoard Images</div>
+          <div class="caption">docker images zeigt die lokalen DevBoard-Images</div>
         </div>
       </div>
       <div class="content-block reveal">
@@ -1453,8 +1453,8 @@ volumes:
           taggen, auf Docker Hub publizieren und dokumentieren.
         </div>
         <p>
-          Unsere Images auf Docker Hub gepusht: <code>docker login</code> =>
-          <code>docker tag</code> => <code>docker push</code>
+          Unsere Images auf Docker Hub gepusht mit den Befehlen:
+          <code>docker login</code>, <code>docker tag</code> und <code>docker push</code>.
         </p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1YiYI8zep0ib1OGlWcWajPmT5vEDbc-XV/preview" width="640" height="480"></iframe>
@@ -1591,7 +1591,7 @@ volumes:
             <tr>
               <td><strong>CVE-Score</strong></td>
               <td>0 bis 10. Ab 7 = High, ab 9 = Critical</td>
-              <td>Trivy zeigt Scores => Critical sofort fixen</td>
+              <td>Trivy zeigt Scores an; kritische Schwachstellen werden sofort behoben</td>
             </tr>
             <tr>
               <td><strong>Base-Image-Alter</strong></td>
@@ -1655,9 +1655,9 @@ docker run --rm aquasec/trivy image --severity HIGH,CRITICAL amadelaela/devboard
           Netzwerken, Health-Checks und Resource Limits ist.
         </p>
         <p>
-          Am meisten gelernt haben wir bei der Fehlersuche => wenn man
-          absichtlich was kaputt macht und dann mit Docker-Logs rausfinden muss
-          was schief läuft, versteht man plötzlich wie alles zusammenhängt.
+          Am meisten gelernt haben wir bei der Fehlersuche: wenn man absichtlich
+          etwas kaputt macht und dann mit Docker-Logs herausfinden muss was schief
+          gelaufen ist, versteht man plötzlich wie alles zusammenhängt.
         </p>
         <p>
           Der Cloud-Vergleich war auch spannend. Jetzt verstehen wir warum K8s
@@ -1671,8 +1671,8 @@ docker run --rm aquasec/trivy image --severity HIGH,CRITICAL amadelaela/devboard
         <h4>Was würden wir anders machen?</h4>
         <p>
           Mit mehr Zeit hätten wir die App auf Google Cloud Run deployed und
-          eine CI/CD-Pipeline mit GitHub Actions gebaut => Images automatisch
-          bauen, scannen und pushen bei jedem Push auf main. HTTPS mit Let's
+          eine CI/CD-Pipeline mit GitHub Actions gebaut, um Images bei jedem
+          Push auf main automatisch zu bauen, zu scannen und zu pushen. HTTPS mit Let's
           Encrypt wäre auch nice gewesen.
         </p>
       </div>
