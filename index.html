@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevBoard | M347 Dokumentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a27;--bg4:#222235;--text:#e2e2ef;--text2:#9999b0;--text3:#6666a0;--accent:#6c5ce7;--accent2:#a855f7;--accent3:#00d2ff;--green:#10b981;--red:#ef4444;--border:#2a2a3d;--font:"Outfit",sans-serif;--mono:"JetBrains Mono",monospace}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--accent) var(--bg2)}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+code{font-family:var(--mono);font-size:.85em;background:var(--bg3);padding:.15em .4em;border-radius:4px;color:var(--accent3)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);background:rgba(10,10,15,.8);border-bottom:1px solid var(--border);padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between}
+nav .logo{font-family:var(--mono);font-weight:700;font-size:1.1rem;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+nav .links{display:flex;gap:1.5rem}nav .links a{color:var(--text2);text-decoration:none;font-size:.85rem;font-weight:500;transition:.2s}nav .links a:hover{color:var(--accent3)}
+@media(max-width:768px){nav .links{display:none}}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(108,92,231,.08) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(0,210,255,.06) 0%,transparent 50%);animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate(0,0)}100%{transform:translate(-3%,2%)}}
+.hero .badge{display:inline-block;padding:.4rem 1rem;border:1px solid var(--accent);border-radius:99px;font-family:var(--mono);font-size:.75rem;color:var(--accent);margin-bottom:1.5rem;letter-spacing:.05em;animation:fadeIn .8s ease}
+.hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:800;line-height:1.1;margin-bottom:1rem;animation:fadeUp .8s ease .2s both}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{font-size:1.1rem;color:var(--text2);max-width:600px;margin:0 auto 2rem;animation:fadeUp .8s ease .4s both}
+.hero .meta{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .8s ease .6s both}
+.hero .meta-item{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text3)}.hero .meta-item strong{color:var(--text);font-family:var(--mono)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.section{max-width:900px;margin:0 auto;padding:4rem 2rem}.section-header{margin-bottom:3rem}.section-header h2{font-size:2rem;font-weight:700}.section-header p{color:var(--text2);margin-top:.5rem}
+.komp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin:2rem 0}
+.komp-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:.3s}.komp-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 30px rgba(108,92,231,.15)}.komp-card .id{font-family:var(--mono);font-size:.75rem;font-weight:700;color:var(--accent);margin-bottom:.3rem}.komp-card .desc{font-size:.85rem;color:var(--text2);line-height:1.5}
+.content-block{margin-bottom:3rem}.content-block h3{font-size:1.4rem;font-weight:600;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}.content-block h3 .tag{font-family:var(--mono);font-size:.7rem;background:var(--accent);color:#fff;padding:.15rem .5rem;border-radius:4px;font-weight:500}.content-block h4{font-size:1.05rem;font-weight:600;margin:1.5rem 0 .5rem;color:var(--text)}.content-block p{color:var(--text2);margin-bottom:.8rem}.content-block strong{color:var(--text)}
+.lernziel{background:var(--bg2);border-left:3px solid var(--accent);padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin-bottom:1.5rem;font-size:.9rem}.lernziel span{color:var(--accent);font-family:var(--mono);font-size:.7rem;font-weight:700;display:block;margin-bottom:.3rem}
+.table-wrap{overflow-x:auto;margin:1rem 0;border-radius:8px;border:1px solid var(--border)}table{width:100%;border-collapse:collapse;font-size:.85rem}th{background:var(--bg3);text-align:left;padding:.7rem 1rem;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);border-bottom:1px solid var(--border)}td{padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--text2)}tr:last-child td{border-bottom:none}tr:hover td{background:rgba(108,92,231,.03)}
+.screenshot{margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg2)}.screenshot img{width:100%;display:block}.screenshot .caption{padding:.6rem 1rem;font-size:.75rem;color:var(--text3);font-family:var(--mono);border-top:1px solid var(--border);display:flex;align-items:center;gap:.5rem}.screenshot .caption::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green)}
+.tip{background:rgba(0,210,255,.05);border:1px solid rgba(0,210,255,.15);border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;font-size:.85rem;color:var(--accent3)}.tip::before{content:"💡";margin-right:.5rem}
+details{margin:1rem 0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--bg2)}details summary{padding:.8rem 1rem;cursor:pointer;font-family:var(--mono);font-size:.85rem;font-weight:500;color:var(--accent3);background:var(--bg3);user-select:none;list-style:none;display:flex;align-items:center;gap:.5rem}details summary::before{content:"▶";font-size:.6rem;transition:transform .2s}details[open] summary::before{transform:rotate(90deg)}details summary:hover{background:var(--bg4)}details pre{margin:0;padding:1rem;font-family:var(--mono);font-size:.78rem;color:var(--green);overflow-x:auto;line-height:1.7;white-space:pre;background:var(--bg)}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:4rem 0}
+.phase-sep{padding:5rem 2rem;text-align:center;position:relative}.phase-sep h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:800}.phase-sep h2 span{background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.phase-sep .num{font-family:var(--mono);font-size:8rem;font-weight:800;color:var(--bg3);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:-1}
+footer{text-align:center;padding:3rem 2rem;color:var(--text3);font-size:.8rem;border-top:1px solid var(--border)}footer a{color:var(--accent);text-decoration:none}
+.reveal{opacity:0;transform:translateY(30px);transition:.8s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<nav><div class="logo">&gt; devboard_docs</div><div class="links"><a href="#kompetenzen">Kompetenzen</a><a href="#phase1">Phase 1</a><a href="#phase2">Phase 2</a><a href="#phase3">Phase 3</a><a href="#phase4">Phase 4</a><a href="#reflexion">Reflexion</a></div></nav>
+<div class="hero"><div class="badge">MODUL 347 — DIENSTE MIT CONTAINERN IMPLEMENTIEREN</div><h1><span>DevBoard</span><br>Multi-Container Webapp</h1><p class="sub">Ein Task-Board als Full-Stack Webanwendung mit 3 Docker Containern. Gebaut, deployed, gescannt und dokumentiert.</p><div class="meta"><div class="meta-item">👥 <strong>Kaya, Vuk &amp; Matteo</strong></div><div class="meta-item">🛠 <strong>Claude, Docker</strong></div><div class="meta-item">📅 <strong>13.4.2026</strong></div><div class="meta-item">⏱ <strong>~3 Tage</strong></div></div></div>
+<section class="section" id="kompetenzen"><div class="section-header reveal"><h2>Abgedeckte Kompetenzen</h2><p>Alles was wir mit diesem Projekt abdecken:</p></div><div class="komp-grid"><div class="komp-card reveal"><div class="id">A1F</div><div class="desc">Anforderungen für containerisierten Dienst erfassen</div></div><div class="komp-card reveal"><div class="id">A1E</div><div class="desc">Anforderungen analysieren, Verbesserungen vorschlagen</div></div><div class="komp-card reveal"><div class="id">B1E</div><div class="desc">Mehrere Kompositions-Varianten vergleichen + begründen</div></div><div class="komp-card reveal"><div class="id">B2E</div><div class="desc">Netzwerkdiagramm für sicheren Containerbetrieb</div></div><div class="komp-card reveal"><div class="id">C1G</div><div class="desc">Dienste von Container-Plattform-Anbietern aufzählen</div></div><div class="komp-card reveal"><div class="id">C1F</div><div class="desc">Cloud-Anbieter Vor- und Nachteile vergleichen</div></div><div class="komp-card reveal"><div class="id">C1E</div><div class="desc">Entscheidungsmatrix für Containerdienstleister</div></div><div class="komp-card reveal"><div class="id">C2G</div><div class="desc">Container-Registry Merkmale + Beispiele nennen</div></div><div class="komp-card reveal"><div class="id">C2F</div><div class="desc">Orchestrierungstechnologien aufzählen + beschreiben</div></div><div class="komp-card reveal"><div class="id">C2E</div><div class="desc">Public vs. Private Container Registry erklären</div></div><div class="komp-card reveal"><div class="id">D1E</div><div class="desc">Umfangreiche Container-Konfiguration + Fehler beheben</div></div><div class="komp-card reveal"><div class="id">D2G</div><div class="desc">Images beziehen, starten, stoppen, löschen</div></div><div class="komp-card reveal"><div class="id">D2F</div><div class="desc">Eigene Images in Registry publizieren</div></div><div class="komp-card reveal"><div class="id">D2E</div><div class="desc">Images in mehrere Registries publizieren</div></div><div class="komp-card reveal"><div class="id">F1G</div><div class="desc">Methoden zur Qualitätssicherung aufzählen</div></div><div class="komp-card reveal"><div class="id">F1F</div><div class="desc">Sicherheitsindikatoren für Container beschreiben</div></div><div class="komp-card reveal"><div class="id">F1E</div><div class="desc">Sicherheitslücken finden + beheben</div></div></div></section>
+<div class="divider"></div>
+<div class="phase-sep" id="phase1"><div class="num">01</div><h2 class="reveal">Phase 1: <span>Anforderungen &amp; Architektur</span></h2></div>
+<section class="section">
+<div class="content-block reveal"><h3><span class="tag">A1F</span> Anforderungen erfassen</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann bis Ende des Projekts die funktionalen und nicht-funktionalen Anforderungen für eine containerisierte Webanwendung (DevBoard) in einer Anforderungsliste dokumentieren.</div><p>Bevor wir irgendwas mit Docker machen, müssen wir zuerst wissen was unsere App überhaupt können soll. Ohne klare Anforderungen wissen wir nicht welche Container wir brauchen und wie die miteinander reden.</p><p>Wir haben uns für ein einfaches Task-Board entschieden => DevBoard. Damit kann man Tasks erstellen, anzeigen und löschen.</p><h4>Funktionale Anforderungen</h4><p>=> Tasks anzeigen => eine Übersicht aller Tasks im Board<br>=> Tasks erstellen => neue Aufgaben mit Titel anlegen<br>=> Tasks löschen => erledigte Aufgaben entfernen<br>=> Persistente Datenhaltung => Tasks bleiben nach Neustart erhalten<br>=> REST API => Frontend redet über HTTP mit dem Backend</p><h4>Nicht-funktionale Anforderungen</h4><p>=> Containerisiert => jeder Dienst läuft in seinem eigenen Container<br>=> Reproduzierbar => <code>docker compose up</code> startet die gesamte App<br>=> Isolierte Netzwerke => die Datenbank ist nicht direkt von aussen erreichbar<br>=> Daten-Persistenz => DB-Daten liegen auf einem Docker Volume<br>=> Portabilität => läuft auf jedem System mit Docker</p><h4>Technologie-Entscheid</h4><div class="table-wrap"><table><tr><th>Komponente</th><th>Technologie</th><th>Warum?</th></tr><tr><td>Frontend</td><td>Nginx + HTML/JS</td><td>Leichtgewichtig und schnell</td></tr><tr><td>Backend</td><td>Python Flask</td><td>Einfache REST API, wenig Boilerplate</td></tr><tr><td>Datenbank</td><td>PostgreSQL</td><td>Robust, Open Source, weit verbreitet</td></tr><tr><td>Orchestrierung</td><td>Docker Compose</td><td>Perfekt für Multi-Container auf einem Host</td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">A1E</span> Anforderungen analysieren &amp; verbessern</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann die erfassten Anforderungen kritisch analysieren und mindestens 3 konkrete Verbesserungsvorschläge formulieren und begründen.</div><p>Nachdem wir die Anforderungen aufgeschrieben haben, haben wir geschaut was man noch besser machen kann:</p><div class="table-wrap"><table><tr><th>Verbesserung</th><th>Problem ohne</th><th>Unsere Lösung</th></tr><tr><td><strong>Health-Checks</strong></td><td>Docker weiss nicht ob ein Container wirklich funktioniert</td><td><code>healthcheck</code> in docker-compose.yml</td></tr><tr><td><strong>Resource Limits</strong></td><td>Ein Container kann den ganzen RAM fressen</td><td><code>mem_limit</code> und <code>cpus</code> pro Container</td></tr><tr><td><strong>Restart Policy</strong></td><td>Container bleibt nach Crash einfach tot</td><td><code>restart: unless-stopped</code></td></tr><tr><td><strong>Environment Vars</strong></td><td>Passwörter im Code = Sicherheitsrisiko</td><td><code>.env</code> Dateien benutzen</td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">B1E</span> Kompositions-Varianten</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 2 Container-Kompositions-Varianten vorschlagen, vergleichen und die gewählte Variante begründen.</div><p>Wir haben 3 Möglichkeiten verglichen:</p><div class="table-wrap"><table><tr><th>Kriterium</th><th>Monolith</th><th>Docker Compose</th><th>Kubernetes</th></tr><tr><td>Was ist das?</td><td>Alles in einem Container</td><td>3 separate Container, ein YAML</td><td>Jeder Dienst als Pod</td></tr><tr><td>Skalierbarkeit</td><td>Geht nicht</td><td>Pro Container, ein Host</td><td>Volle Skalierung</td></tr><tr><td>Komplexität</td><td>Super einfach</td><td>Geht klar</td><td>Ziemlich komplex</td></tr><tr><td>Wartbarkeit</td><td>Mühsam</td><td>Gut</td><td>Sehr gut</td></tr><tr><td>Wofür?</td><td>Schnelle Demos</td><td>Entwicklung, Lernen</td><td>Produktion</td></tr></table></div><p><strong>Unser Entscheid: Docker Compose.</strong> Beste Balance zwischen Isolation und Einfachheit. Monolith widerspricht dem Container-Prinzip, Kubernetes wäre totaler Overkill.</p></div>
+<div class="content-block reveal"><h3><span class="tag">B2E</span> Netzwerkdiagramm</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann ein vollständiges Netzwerkdiagramm erstellen, das alle Container, Netzwerke, Ports und den Datenfluss zeigt.</div><p>Um zu zeigen wie unsere Container miteinander verbunden sind, haben wir ein Netzwerkdiagramm erstellt:</p><div class="tip">Erstellt mit <strong>draw.io</strong> => kostenloses Online-Tool, gibt's auch als VS Code Extension.</div><div class="screenshot"><img src="./screenshots/netzwerk.png" alt="Netzwerkdiagramm"><div class="caption">Netzwerkdiagramm der DevBoard-Anwendung</div></div><p><strong>Warum zwei Netzwerke?</strong> Das frontend-network ist nach aussen exponiert (Port 8080), aber das backend-network ist komplett intern (<code>internal: true</code>). PostgreSQL ist nie direkt vom Browser erreichbar => nur Flask kann mit der DB reden.</p></div>
+</section><div class="divider"></div>
+<div class="phase-sep" id="phase2"><div class="num">02</div><h2 class="reveal">Phase 2: <span>Cloud &amp; Registries</span></h2></div>
+<section class="section">
+<div class="content-block reveal"><h3><span class="tag">C1G</span> Container-Plattform-Anbieter</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann die wichtigsten Dienste von mindestens 3 Container-Plattform-Anbietern aufzählen und deren Kernfunktionen beschreiben.</div><p>Wir haben uns die drei grössten Cloud-Anbieter angeschaut:</p><div class="table-wrap"><table><tr><th>Anbieter</th><th>Dienste</th><th>Was können die?</th></tr><tr><td><strong>AWS</strong></td><td>ECS, Fargate, EKS</td><td>Serverloses Container-Hosting, Managed K8s, ECR, Auto-Scaling</td></tr><tr><td><strong>Azure</strong></td><td>ACI, AKS</td><td>Container on-demand, Managed K8s (kostenlose Control Plane), ACR</td></tr><tr><td><strong>Google Cloud</strong></td><td>Cloud Run, GKE</td><td>Serverless Containers, Autopilot-K8s, Artifact Registry</td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">C1F</span> Cloud-Anbieter Vergleich</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann die Vor- und Nachteile von mindestens 3 Public-Cloud-Anbietern in einer Vergleichstabelle darstellen.</div><div class="table-wrap"><table><tr><th></th><th>AWS</th><th>Azure</th><th>Google Cloud</th></tr><tr><td>Marktanteil</td><td>~31%</td><td>~25%</td><td>~11%</td></tr><tr><td>Einstieg</td><td>Komplex, mega viele Optionen</td><td>Gute Microsoft-Integration</td><td>Am einfachsten</td></tr><tr><td>Kosten</td><td>Free Tier 12 Monate</td><td>Free Tier 12 Monate</td><td>Günstigerer Free Tier</td></tr><tr><td>K8s</td><td>EKS (extra Service)</td><td>AKS (kostenlos)</td><td>GKE Autopilot (sehr ausgereift)</td></tr><tr><td>Vorteil</td><td>Grösstes Ökosystem</td><td>Hybrid mit Azure Arc</td><td>Bestes K8s + Serverless</td></tr><tr><td>Nachteil</td><td>Steile Lernkurve</td><td>Weniger Container-fokus</td><td>Kleinerer Marktanteil</td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">C1E</span> Entscheidungsmatrix</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann eine gewichtete Entscheidungsmatrix mit mindestens 5 Kriterien erstellen und einen Anbieter auswählen.</div><p>Um objektiv zu entscheiden haben wir eine gewichtete Matrix gebaut:</p><div class="table-wrap"><table><tr><th>Kriterium (Gewicht)</th><th>AWS</th><th>Azure</th><th>Google Cloud</th></tr><tr><td>Einfachheit (30%)</td><td>2</td><td>3</td><td><strong>5</strong></td></tr><tr><td>Kosten (25%)</td><td>3</td><td>3</td><td><strong>5</strong></td></tr><tr><td>K8s-Support (20%)</td><td>4</td><td>4</td><td><strong>5</strong></td></tr><tr><td>Doku (15%)</td><td><strong>5</strong></td><td>4</td><td>4</td></tr><tr><td>CH-Rechenzentrum (10%)</td><td>4</td><td><strong>5</strong></td><td>4</td></tr><tr><td><strong>Score</strong></td><td><strong>3.15</strong></td><td><strong>3.55</strong></td><td><strong>4.80</strong></td></tr></table></div><div class="tip">Visualisierung erstellt mit einem Online-Chart-Tool. Geht auch mit <strong>Canva</strong> oder <strong>Google Sheets</strong>.</div><div class="screenshot"><img src="./screenshots/pie_aws.png" alt="AWS"><div class="caption">AWS => Score 3.15</div></div><div class="screenshot"><img src="./screenshots/pie_azure.png" alt="Azure"><div class="caption">Azure => Score 3.55</div></div><div class="screenshot"><img src="./screenshots/pie_google.png" alt="Google"><div class="caption">Google Cloud => Score 4.80</div></div><p><strong>Entscheid: Google Cloud Run.</strong> Einfachster Einstieg, bester Free Tier, und K8s direkt dabei wenn man skalieren will.</p></div>
+<div class="content-block reveal"><h3><span class="tag">C2G</span> Was ist eine Container-Registry?</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann die Merkmale einer Container-Registry nennen und mindestens 4 Beispiele aufzählen.</div><p>Eine Container-Registry ist im Grunde wie GitHub, aber für Docker Images statt Code:</p><p>=> <strong>Tags</strong> => verschiedene Versionen (z.B. v1.0, latest)<br>=> <strong>Layer-basiert</strong> => nur geänderte Schichten werden hochgeladen<br>=> <strong>Access Control</strong> => public oder private Repos<br>=> <strong>Vulnerability Scanning</strong> => automatisches Scannen nach Lücken</p><p><strong>Beispiele:</strong> Docker Hub, GHCR, AWS ECR, Azure ACR, Google Artifact Registry.</p></div>
+<div class="content-block reveal"><h3><span class="tag">C2F</span> Orchestrierungstechnologien</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 3 Orchestrierungstechnologien aufzählen und deren Zweck beschreiben.</div><div class="table-wrap"><table><tr><th>Technologie</th><th>Was macht das?</th><th>Wofür?</th></tr><tr><td><strong>Docker Compose</strong></td><td>Multi-Container auf einem Host via YAML</td><td>Entwicklung, Testing, Lernen</td></tr><tr><td><strong>Kubernetes</strong></td><td>Auto-Scaling, Self-Healing, Rolling Updates</td><td>Produktion, grosse Systeme</td></tr><tr><td><strong>Docker Swarm</strong></td><td>Dockers eigene Cluster-Lösung</td><td>Kleine Cluster (wird kaum noch genutzt)</td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">C2E</span> Public vs. Private Registry</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann die Unterschiede zwischen Public und Private Registries anhand von mindestens 4 Kriterien erklären.</div><div class="table-wrap"><table><tr><th></th><th>Public</th><th>Private</th></tr><tr><td>Zugriff</td><td>Jeder kann pullen</td><td>Nur autorisierte Nutzer</td></tr><tr><td>Kosten</td><td>Meistens gratis</td><td>Kostenpflichtig / self-hosted</td></tr><tr><td>Sicherheit</td><td>Öffentlich sichtbar</td><td>Geschützt</td></tr><tr><td>Beispiele</td><td>Docker Hub, GHCR</td><td>ECR, ACR, Harbor</td></tr><tr><td>Use Case</td><td>Open-Source, Tutorials</td><td>Firmen-Software</td></tr></table></div></div>
+</section><div class="divider"></div>
+<div class="phase-sep" id="phase3"><div class="num">03</div><h2 class="reveal">Phase 3: <span>Build, Run &amp; Publish</span></h2></div>
+<section class="section">
+<div class="content-block reveal"><h3><span class="tag">D1E</span> Container-Konfiguration + Fehlersuche</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann eine umfangreiche docker-compose.yml mit mindestens 3 Services, Netzwerken, Volumes und Health-Checks erstellen und mindestens 2 Fehlerquellen selbständig beheben.</div>
+<p>Jetzt wird's praktisch. Wir haben die ganze App von Grund auf gebaut => 3 Container, 2 Netzwerke, 1 Volume. Hier ist alles was wir gemacht haben:</p>
+<h4>Projektstruktur</h4><p>So sieht unser Projekt in VS Code aus:</p><div class="screenshot"><img src="./screenshots/projektstruktur.png" alt="Projektstruktur"><div class="caption">DevBoard Projektstruktur in VS Code</div></div>
+<h4>Backend: Flask API</h4><p>Das Backend ist eine Python Flask REST API. Die hat Endpoints um Tasks zu erstellen (POST), anzuzeigen (GET) und zu löschen (DELETE). Ausserdem gibt's einen Health-Check Endpoint den Docker benutzt um zu prüfen ob der Container noch lebt.</p>
+<details><summary>backend/app.py anzeigen</summary><pre>from flask import Flask, request, jsonify
+from flask_cors import CORS
+import psycopg2, os, time
+
+app = Flask(__name__)
+CORS(app)
+
+def get_db():
+    retries = 5
+    while retries &gt; 0:
+        try:
+            conn = psycopg2.connect(
+                host=os.environ.get("DB_HOST", "db"),
+                port=os.environ.get("DB_PORT", "5432"),
+                database=os.environ.get("DB_NAME", "devboard"),
+                user=os.environ.get("DB_USER", "devboard"),
+                password=os.environ.get("DB_PASS", "secret"))
+            return conn
+        except psycopg2.OperationalError:
+            retries -= 1
+            time.sleep(2)
+    raise Exception("Datenbank nicht erreichbar")
+
+def init_db():
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("""CREATE TABLE IF NOT EXISTS tasks (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)""")
+        conn.commit(); cur.close(); conn.close()
+    except Exception: pass
+
+init_db()
+
+@app.route("/api/tasks", methods=["GET"])
+def get_tasks():
+    conn = get_db(); cur = conn.cursor()
+    cur.execute("SELECT id, title, created_at FROM tasks ORDER BY created_at DESC")
+    tasks = [{"id": r[0], "title": r[1], "created_at": str(r[2])} for r in cur.fetchall()]
+    cur.close(); conn.close()
+    return jsonify(tasks)
+
+@app.route("/api/tasks", methods=["POST"])
+def create_task():
+    data = request.get_json()
+    if not data or not data.get("title"): return jsonify({"error": "Titel fehlt"}), 400
+    conn = get_db(); cur = conn.cursor()
+    cur.execute("INSERT INTO tasks (title) VALUES (%s) RETURNING id, title, created_at", (data["title"],))
+    task = cur.fetchone(); conn.commit(); cur.close(); conn.close()
+    return jsonify({"id": task[0], "title": task[1], "created_at": str(task[2])}), 201
+
+@app.route("/api/tasks/&lt;int:task_id&gt;", methods=["DELETE"])
+def delete_task(task_id):
+    conn = get_db(); cur = conn.cursor()
+    cur.execute("DELETE FROM tasks WHERE id = %s", (task_id,))
+    conn.commit(); cur.close(); conn.close()
+    return jsonify({"deleted": task_id})
+
+@app.route("/api/health")
+def health():
+    try:
+        conn = get_db(); cur = conn.cursor()
+        cur.execute("SELECT 1"); cur.close(); conn.close()
+        return jsonify({"status": "healthy"})
+    except Exception as e:
+        return jsonify({"status": "unhealthy", "error": str(e)}), 500</pre></details>
+<div class="screenshot"><img src="./screenshots/app_py.png" alt="app.py"><div class="caption">app.py im Editor => Flask REST API mit DB-Verbindung</div></div>
+<h4>Backend: Dockerfile</h4><p>Basiert auf <code>python:3.12-slim</code>, läuft als nicht-Root-User (<code>appuser</code>) und benutzt Gunicorn als Production-Server.</p>
+<details><summary>backend/Dockerfile anzeigen</summary><pre>FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .
+RUN useradd -r appuser
+USER appuser
+EXPOSE 5000
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:app"]</pre></details>
+<div class="screenshot"><img src="./screenshots/backend_dockerfile.png" alt="Dockerfile"><div class="caption">Backend Dockerfile => non-root User + Gunicorn</div></div>
+<h4>Frontend: Nginx als Reverse Proxy</h4><p>Nginx liefert die statischen Files aus und leitet <code>/api/</code> Requests an Flask weiter.</p>
+<details><summary>frontend/nginx.conf anzeigen</summary><pre>server {
+    listen 80;
+    server_name localhost;
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+    }
+    location /api/ {
+        proxy_pass http://backend:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</pre></details>
+<div class="screenshot"><img src="./screenshots/nginx_conf.png" alt="nginx.conf"><div class="caption">nginx.conf => Reverse Proxy Config</div></div>
+<h4>Environment Variables</h4><p>Secrets liegen in einer <code>.env</code> Datei, nicht im Code:</p><div class="screenshot"><img src="./screenshots/env_file.png" alt=".env"><div class="caption">.env => Secrets getrennt vom Code</div></div>
+<h4>Docker Compose</h4><p>Das Herzstück => die <code>docker-compose.yml</code> bringt alles zusammen. 3 Services, 2 Netzwerke, 1 Volume, Health-Checks, Resource Limits und Restart Policies.</p>
+<details><summary>docker-compose.yml anzeigen</summary><pre>services:
+  frontend:
+    build: ./frontend
+    container_name: devboard-frontend
+    ports: ["8080:80"]
+    networks: [frontend-network]
+    depends_on:
+      backend: { condition: service_healthy }
+    restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.25
+
+  backend:
+    build: ./backend
+    container_name: devboard-backend
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    networks: [frontend-network, backend-network]
+    depends_on:
+      db: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+
+  db:
+    image: postgres:16-alpine
+    container_name: devboard-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    networks: [backend-network]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.5
+
+networks:
+  frontend-network: { driver: bridge }
+  backend-network: { driver: bridge, internal: true }
+
+volumes:
+  pgdata:</pre></details>
+<h4>App starten</h4><p>Mit <code>docker compose up --build -d</code> wird alles gebaut und gestartet:</p><div class="screenshot"><img src="./screenshots/compose_up_build.png" alt="Build"><div class="caption">docker compose up --build -d</div></div><div class="screenshot"><img src="./screenshots/compose_up.png" alt="Healthy"><div class="caption">Alle 3 Container laufen</div></div>
+<h4>App testen</h4><p>Die App läuft unter <code>http://localhost:8080</code>. Wir haben Tasks erstellt und den Health-Check getestet:</p><div class="screenshot"><img src="./screenshots/devboard_task.png" alt="DevBoard"><div class="caption">DevBoard im Browser => Task erstellt</div></div><div class="screenshot"><img src="./screenshots/health_check.png" alt="Health"><div class="caption">Health-Check => {"status": "healthy"}</div></div>
+<h4>Persistenz testen</h4><p>App komplett gestoppt und neu gestartet => Tasks waren dank pgdata Volume noch da:</p><div class="screenshot"><img src="./screenshots/persistenz.png" alt="Persistenz"><div class="caption">docker compose down => up => Daten noch da</div></div><div class="screenshot"><img src="./screenshots/devboard_2tasks.png" alt="Tasks"><div class="caption">Tasks nach Neustart noch vorhanden</div></div>
+<h4>Fehlersuche</h4><p>Um zu zeigen dass wir Fehler selbständig fixen können, haben wir absichtlich 2 Fehler eingebaut:</p>
+<p><strong>Fehler 1: Falscher Port im Nginx Proxy</strong><br>Port in <code>nginx.conf</code> von 5000 auf 3000 geändert => Nginx kann API-Requests nicht weiterleiten => 502 Bad Gateway:</p><div class="screenshot"><img src="./screenshots/fehler_502.png" alt="502"><div class="caption">502 Bad Gateway => falscher Proxy-Port</div></div><p><strong>Fix:</strong> Port zurück auf 5000, Container neu gebaut => läuft wieder.</p>
+<p><strong>Fehler 2: Falsches DB-Passwort</strong><br>Passwort in <code>.env</code> geändert, aber PostgreSQL hatte das alte noch im Volume => Mismatch:</p><div class="screenshot"><img src="./screenshots/fehler_backend.png" alt="Error"><div class="caption">Backend crashed => dependency failed to start</div></div><div class="screenshot"><img src="./screenshots/fehler_500.png" alt="500"><div class="caption">500 Internal Server Errors</div></div><p><strong>Fix:</strong> Passwort zurücksetzen, Volume löschen (<code>docker compose down -v</code>), neu starten.</p>
+</div>
+<div class="content-block reveal"><h3><span class="tag">D2G</span> Image-Lifecycle</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann Container-Images aus Docker Hub beziehen, starten, stoppen und löschen und jeden Schritt dokumentieren.</div><p>Kompletten Lifecycle durchgespielt => Images pullen, Container starten, stoppen, wieder starten:</p><div class="screenshot"><img src="./screenshots/image_lifecycle.png" alt="Lifecycle"><div class="caption">Image-Management => pull, stop, start, ps</div></div><div class="screenshot"><img src="./screenshots/docker_images.png" alt="Images"><div class="caption">docker images => lokale DevBoard Images</div></div></div>
+<div class="content-block reveal"><h3><span class="tag">D2F</span> Images auf Docker Hub pushen</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann ein selbst erstelltes Docker-Image taggen, auf Docker Hub publizieren und dokumentieren.</div><p>Unsere Images auf Docker Hub gepusht: <code>docker login</code> => <code>docker tag</code> => <code>docker push</code></p><div class="screenshot"><img src="./screenshots/dockerhub_profile.png" alt="Hub"><div class="caption">Docker Hub => unsere Repositories</div></div><div class="screenshot"><img src="./screenshots/dockerhub_backend.png" alt="Backend"><div class="caption">devboard-backend mit Tags v1.0 + latest</div></div><div class="screenshot"><img src="./screenshots/dockerhub_frontend.png" alt="Frontend"><div class="caption">devboard-frontend auf Docker Hub</div></div></div>
+<div class="content-block reveal"><h3><span class="tag">D2E</span> Images auf mehrere Registries</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann dasselbe Image auf Docker Hub und GitHub Container Registry publizieren und die Unterschiede dokumentieren.</div><p>Gleiche Images auch auf GHCR gepusht. Braucht einen GitHub Personal Access Token:</p><div class="screenshot"><img src="./screenshots/ghcr_push.png" alt="Push"><div class="caption">docker push zu GHCR</div></div><div class="screenshot"><img src="./screenshots/ghcr_backend.png" alt="GHCR"><div class="caption">devboard-backend auf GitHub Packages</div></div><div class="screenshot"><img src="./screenshots/ghcr_frontend.png" alt="GHCR"><div class="caption">devboard-frontend auf GitHub Packages</div></div>
+<h4>Docker Hub vs. GHCR</h4><div class="table-wrap"><table><tr><th></th><th>Docker Hub</th><th>GHCR</th></tr><tr><td>Standard</td><td>Default-Registry</td><td>In GitHub integriert</td></tr><tr><td>Sichtbarkeit</td><td>Public by default</td><td>Private by default</td></tr><tr><td>CI/CD</td><td>Eigene Integration</td><td>Direkt mit GitHub Actions</td></tr><tr><td>Auth</td><td>Docker Hub Account</td><td>GitHub Token (PAT)</td></tr><tr><td>Format</td><td><code>user/image:tag</code></td><td><code>ghcr.io/user/image:tag</code></td></tr></table></div></div>
+</section><div class="divider"></div>
+<div class="phase-sep" id="phase4"><div class="num">04</div><h2 class="reveal">Phase 4: <span>Sicherheit</span></h2></div>
+<section class="section">
+<div class="content-block reveal"><h3><span class="tag">F1G</span> Qualitätssicherung</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 4 Methoden zur Qualitätssicherung von Container-Images aufzählen und erklären.</div><div class="table-wrap"><table><tr><th>Methode</th><th>Was macht das?</th><th>Tools</th></tr><tr><td><strong>Image Scanning</strong></td><td>Sucht nach bekannten CVEs in Paketen</td><td>Trivy, Snyk, Grype</td></tr><tr><td><strong>Dockerfile Linting</strong></td><td>Prüft Best Practices im Dockerfile</td><td>Hadolint, Dockle</td></tr><tr><td><strong>Image Signing</strong></td><td>Kryptographische Signatur gegen Manipulation</td><td>Content Trust, Cosign</td></tr><tr><td><strong>Runtime Testing</strong></td><td>Prüft laufende Container-Konfiguration</td><td>Docker Bench, Falco</td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">F1F</span> Sicherheitsindikatoren</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann Sicherheitsindikatoren beschreiben und deren Relevanz für den Containerbetrieb erklären.</div><div class="table-wrap"><table><tr><th>Indikator</th><th>Was heisst das?</th><th>Bei uns</th></tr><tr><td><strong>CVE-Score</strong></td><td>0 bis 10. Ab 7 = High, ab 9 = Critical</td><td>Trivy zeigt Scores => Critical sofort fixen</td></tr><tr><td><strong>Base-Image-Alter</strong></td><td>Älter = mehr Lücken</td><td>python:3.12-slim + nginx:alpine = minimal</td></tr><tr><td><strong>Offene Ports</strong></td><td>Jeder Port = Angriffsvektor</td><td>Nur 8080 extern, PostgreSQL intern</td></tr><tr><td><strong>Root-User</strong></td><td>Root kann Host übernehmen</td><td>Backend läuft als <code>appuser</code></td></tr></table></div></div>
+<div class="content-block reveal"><h3><span class="tag">F1E</span> Sicherheitsscan mit Trivy</h3><div class="lernziel"><span>SMART-Lernziel</span>Ich kann mit Trivy einen Sicherheitsscan durchführen, Schwachstellen analysieren und mindestens 2 davon beheben.</div>
+<h4>Scan durchführen</h4><p>Trivy als Docker-Container benutzt um unsere Images zu scannen:</p>
+<details><summary>Trivy Befehle anzeigen</summary><pre>docker run --rm aquasec/trivy image amadelaela/devboard-backend:v1.0
+docker run --rm aquasec/trivy image amadelaela/devboard-frontend:v1.0
+docker run --rm aquasec/trivy image --severity HIGH,CRITICAL amadelaela/devboard-backend:v1.0</pre></details>
+<div class="tip">Hier eure eigenen Trivy-Scan Screenshots einfügen!</div>
+<h4>Schwachstellen beheben</h4><p><strong>Fix 1: Base-Image pinnen</strong><br><code>FROM python:3.12-slim</code> => <code>FROM python:3.12.8-slim</code> (neuestes Patch-Level)</p><p><strong>Fix 2: System-Pakete updaten</strong><br><code>RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*</code></p><p>Nach dem Rebuild zeigt Trivy deutlich weniger Schwachstellen.</p><div class="tip">Vorher/Nachher Screenshots hier einfügen.</div></div>
+</section><div class="divider"></div>
+<section class="section" id="reflexion"><div class="section-header reveal"><h2>Reflexion</h2></div>
+<div class="content-block reveal"><h4>Was haben wir gelernt?</h4><p>Wir haben eine komplette containerisierte Webapp von Null aufgebaut. Dabei haben wir nicht nur Docker und Compose besser verstanden, sondern auch gelernt wie wichtig saubere Architektur mit getrennten Netzwerken, Health-Checks und Resource Limits ist.</p><p>Am meisten gelernt haben wir bei der Fehlersuche => wenn man absichtlich was kaputt macht und dann mit Docker-Logs rausfinden muss was schief läuft, versteht man plötzlich wie alles zusammenhängt.</p><p>Der Cloud-Vergleich war auch spannend. Jetzt verstehen wir warum K8s für grosse Systeme Sinn macht, aber Compose für Entwicklung die bessere Wahl ist.</p><p>Trivy war ein Augenöffner: sogar ein frisches Image hat schon Schwachstellen. Regelmässig scannen ist Pflicht.</p><h4>Was würden wir anders machen?</h4><p>Mit mehr Zeit hätten wir die App auf Google Cloud Run deployed und eine CI/CD-Pipeline mit GitHub Actions gebaut => Images automatisch bauen, scannen und pushen bei jedem Push auf main. HTTPS mit Let's Encrypt wäre auch nice gewesen.</p></div></section>
+<footer><p>Kaya, Vuk &amp; Matteo · Modul 347 · BBW · 2026</p><p>Gehostet auf <a href="#">GitHub Pages</a></p></footer>
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body></html>
