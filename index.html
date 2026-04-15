@@ -775,9 +775,7 @@
           </table>
         </div>
         <p>
-          <strong>Unser Entscheid: Docker Compose.</strong> Beste Balance
-          zwischen Isolation und Einfachheit. Monolith widerspricht dem
-          Container-Prinzip, Kubernetes wäre totaler Overkill.
+          <strong>Unser Entscheid: Docker Compose.</strong> Für DevBoard brauchen wir die Trennung in 3 Container (damit die DB nicht direkt von aussen erreichbar ist), aber kein Kubernetes-Cluster. Monolith widerspricht dem Container-Grundprinzip "ein Prozess pro Container" und wenn Flask abstürzt, reisst es Nginx und PostgreSQL mit. Kubernetes wäre mit Cluster-Setup, Deployments, Services und Ingress-Config massiver Overkill für ein Lernprojekt mit 3 Containern auf einem Rechner.
         </p>
       </div>
       <div class="content-block reveal">
