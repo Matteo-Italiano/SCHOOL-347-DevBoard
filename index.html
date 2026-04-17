@@ -5,510 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DevBoard | M347 Dokumentation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       :root {
-        --bg: #0a0a0f;
-        --bg2: #12121a;
-        --bg3: #1a1a27;
-        --bg4: #222235;
-        --text: #e2e2ef;
-        --text2: #9999b0;
-        --text3: #6666a0;
-        --accent: #6c5ce7;
-        --accent2: #a855f7;
-        --accent3: #00d2ff;
-        --green: #10b981;
-        --red: #ef4444;
-        --border: #2a2a3d;
-        --font: "Outfit", sans-serif;
-        --mono: "JetBrains Mono", monospace;
-      }
-      html {
-        scroll-behavior: smooth;
-        scrollbar-width: thin;
-        scrollbar-color: var(--accent) var(--bg2);
-      }
-      body {
-        font-family: var(--font);
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.7;
-        overflow-x: hidden;
-      }
-      ::selection {
-        background: var(--accent);
-        color: #fff;
-      }
-      code {
-        font-family: var(--mono);
-        font-size: 0.85em;
-        background: var(--bg3);
-        padding: 0.15em 0.4em;
-        border-radius: 4px;
-        color: var(--accent3);
-      }
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        backdrop-filter: blur(20px);
-        background: rgba(10, 10, 15, 0.8);
-        border-bottom: 1px solid var(--border);
-        padding: 0.8rem 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      nav .logo {
-        font-family: var(--mono);
-        font-weight: 700;
-        font-size: 1.1rem;
-        background: linear-gradient(135deg, var(--accent), var(--accent3));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      nav .links {
-        display: flex;
-        gap: 1.5rem;
-      }
-      nav .links a {
-        color: var(--text2);
-        text-decoration: none;
-        font-size: 0.85rem;
-        font-weight: 500;
-        transition: 0.2s;
-      }
-      nav .links a:hover {
-        color: var(--accent3);
-      }
-      @media (max-width: 768px) {
-        nav .links {
-          display: none;
-        }
-      }
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 6rem 2rem 4rem;
-        position: relative;
-        overflow: hidden;
-      }
-      .hero::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background:
-          radial-gradient(
-            circle at 30% 40%,
-            rgba(108, 92, 231, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 70% 60%,
-            rgba(0, 210, 255, 0.06) 0%,
-            transparent 50%
-          );
-        animation: drift 20s ease-in-out infinite alternate;
-      }
-      @keyframes drift {
-        0% {
-          transform: translate(0, 0);
-        }
-        100% {
-          transform: translate(-3%, 2%);
-        }
-      }
-      .hero .badge {
-        display: inline-block;
-        padding: 0.4rem 1rem;
-        border: 1px solid var(--accent);
-        border-radius: 99px;
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        color: var(--accent);
-        margin-bottom: 1.5rem;
-        letter-spacing: 0.05em;
-        animation: fadeIn 0.8s ease;
-      }
-      .hero h1 {
-        font-size: clamp(2.5rem, 6vw, 5rem);
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 1rem;
-        animation: fadeUp 0.8s ease 0.2s both;
-      }
-      .hero h1 span {
-        background: linear-gradient(
-          135deg,
-          var(--accent),
-          var(--accent2),
-          var(--accent3)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .hero .sub {
-        font-size: 1.1rem;
-        color: var(--text2);
-        max-width: 600px;
-        margin: 0 auto 2rem;
-        animation: fadeUp 0.8s ease 0.4s both;
-      }
-      .hero .meta {
-        display: flex;
-        gap: 2rem;
-        flex-wrap: wrap;
-        justify-content: center;
-        animation: fadeUp 0.8s ease 0.6s both;
-      }
-      .hero .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        color: var(--text3);
-      }
-      .hero .meta-item strong {
-        color: var(--text);
-        font-family: var(--mono);
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .section {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 4rem 2rem;
-      }
-      .section-header {
-        margin-bottom: 3rem;
-      }
-      .section-header h2 {
-        font-size: 2rem;
-        font-weight: 700;
-      }
-      .section-header p {
-        color: var(--text2);
-        margin-top: 0.5rem;
-      }
-      .komp-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1rem;
-        margin: 2rem 0;
-      }
-      .komp-card {
-        background: var(--bg2);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 1.2rem;
-        transition: 0.3s;
-      }
-      .komp-card:hover {
-        border-color: var(--accent);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(108, 92, 231, 0.15);
-      }
-      .komp-card .id {
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--accent);
-        margin-bottom: 0.3rem;
-      }
-      .komp-card .desc {
-        font-size: 0.85rem;
-        color: var(--text2);
-        line-height: 1.5;
-      }
-      .content-block {
-        margin-bottom: 3rem;
-      }
-      .content-block h3 {
-        font-size: 1.4rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .content-block h3 .tag {
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        background: var(--accent);
-        color: #fff;
-        padding: 0.15rem 0.5rem;
-        border-radius: 4px;
-        font-weight: 500;
-      }
-      .content-block h4 {
-        font-size: 1.05rem;
-        font-weight: 600;
-        margin: 1.5rem 0 0.5rem;
-        color: var(--text);
-      }
-      .content-block p {
-        color: var(--text2);
-        margin-bottom: 0.8rem;
-      }
-      .content-block strong {
-        color: var(--text);
-      }
-      .lernziel {
-        background: var(--bg2);
-        border-left: 3px solid var(--accent);
-        padding: 1rem 1.2rem;
-        border-radius: 0 8px 8px 0;
-        margin-bottom: 1.5rem;
-        font-size: 0.9rem;
-      }
-      .lernziel span {
-        color: var(--accent);
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        font-weight: 700;
-        display: block;
-        margin-bottom: 0.3rem;
-      }
-      .table-wrap {
-        overflow-x: auto;
-        margin: 1rem 0;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.85rem;
-      }
-      th {
-        background: var(--bg3);
-        text-align: left;
-        padding: 0.7rem 1rem;
-        font-weight: 600;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--text3);
-        border-bottom: 1px solid var(--border);
-      }
-      td {
-        padding: 0.6rem 1rem;
-        border-bottom: 1px solid var(--border);
-        color: var(--text2);
-      }
-      tr:last-child td {
-        border-bottom: none;
-      }
-      tr:hover td {
-        background: rgba(108, 92, 231, 0.03);
-      }
-      .screenshot {
-        margin: 1.5rem 0;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        background: var(--bg2);
-      }
-      .screenshot img {
-        width: 100%;
-        display: block;
-      }
-      .screenshot .caption {
-        padding: 0.6rem 1rem;
-        font-size: 0.75rem;
-        color: var(--text3);
-        font-family: var(--mono);
-        border-top: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .screenshot .caption::before {
-        content: "";
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--green);
-      }
-      .tip {
-        background: rgba(0, 210, 255, 0.05);
-        border: 1px solid rgba(0, 210, 255, 0.15);
-        border-radius: 8px;
-        padding: 1rem 1.2rem;
-        margin: 1rem 0;
-        font-size: 0.85rem;
-        color: var(--accent3);
-      }
-      .tip::before {
-        content: "💡";
-        margin-right: 0.5rem;
-      }
-      details {
-        margin: 1rem 0;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        overflow: hidden;
-        background: var(--bg2);
-      }
-      details summary {
-        padding: 0.8rem 1rem;
-        cursor: pointer;
-        font-family: var(--mono);
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--accent3);
-        background: var(--bg3);
-        user-select: none;
-        list-style: none;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      details summary::before {
-        content: "▶";
-        font-size: 0.6rem;
-        transition: transform 0.2s;
-      }
-      details[open] summary::before {
-        transform: rotate(90deg);
-      }
-      details summary:hover {
-        background: var(--bg4);
-      }
-      details pre {
-        margin: 0;
-        padding: 1rem;
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        color: var(--green);
-        overflow-x: auto;
-        line-height: 1.7;
-        white-space: pre;
-        background: var(--bg);
-      }
-      .divider {
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          var(--border),
-          transparent
-        );
-        margin: 4rem 0;
-      }
-      .phase-sep {
-        padding: 5rem 2rem;
-        text-align: center;
-        position: relative;
-      }
-      .phase-sep h2 {
-        font-size: clamp(1.8rem, 4vw, 3rem);
-        font-weight: 800;
-      }
-      .phase-sep h2 span {
-        background: linear-gradient(135deg, var(--accent), var(--accent3));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .phase-sep .num {
-        font-family: var(--mono);
-        font-size: 8rem;
-        font-weight: 800;
-        color: var(--bg3);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: -1;
-      }
-      footer {
-        text-align: center;
-        padding: 3rem 2rem;
-        color: var(--text3);
-        font-size: 0.8rem;
-        border-top: 1px solid var(--border);
-      }
-      footer a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: 0.8s ease;
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .sources {
-        font-size: 0.75rem;
-        color: var(--text3);
-        margin-top: 0.5rem;
-        padding: 0.5rem 0.8rem;
-        background: var(--bg2);
-        border-radius: 6px;
-        border-left: 2px solid var(--accent3);
-      }
-      .sources a {
-        color: var(--accent3);
-        text-decoration: none;
-      }
-      .sources a:hover {
-        text-decoration: underline;
-      }
+        --bg: #0a0a0f; --bg2: #12121a; --bg3: #1a1a27; --bg4: #222235;
+        --text: #e2e2ef; --text2: #9999b0; --text3: #6666a0;
+        --accent: #6c5ce7; --accent2: #a855f7; --accent3: #00d2ff;
+        --green: #10b981; --red: #ef4444; --border: #2a2a3d;
+        --font: "Outfit", sans-serif; --mono: "JetBrains Mono", monospace;
+      }
+      html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg2); }
+      body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+      ::selection { background: var(--accent); color: #fff; }
+      code { font-family: var(--mono); font-size: .85em; background: var(--bg3); padding: .15em .4em; border-radius: 4px; color: var(--accent3); }
+      nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(20px); background: rgba(10,10,15,.8); border-bottom: 1px solid var(--border); padding: .8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+      nav .logo { font-family: var(--mono); font-weight: 700; font-size: 1.1rem; background: linear-gradient(135deg,var(--accent),var(--accent3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      nav .links { display: flex; gap: 1.5rem; }
+      nav .links a { color: var(--text2); text-decoration: none; font-size: .85rem; font-weight: 500; transition: .2s; }
+      nav .links a:hover { color: var(--accent3); }
+      @media(max-width:768px){ nav .links { display: none; } }
+      .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
+      .hero::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%,rgba(108,92,231,.08) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(0,210,255,.06) 0%,transparent 50%); animation: drift 20s ease-in-out infinite alternate; }
+      @keyframes drift { 0%{transform:translate(0,0)} 100%{transform:translate(-3%,2%)} }
+      .hero .badge { display: inline-block; padding: .4rem 1rem; border: 1px solid var(--accent); border-radius: 99px; font-family: var(--mono); font-size: .75rem; color: var(--accent); margin-bottom: 1.5rem; letter-spacing: .05em; animation: fadeIn .8s ease; }
+      .hero h1 { font-size: clamp(2.5rem,6vw,5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; animation: fadeUp .8s ease .2s both; }
+      .hero h1 span { background: linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .hero .sub { font-size: 1.1rem; color: var(--text2); max-width: 600px; margin: 0 auto 2rem; animation: fadeUp .8s ease .4s both; }
+      .hero .meta { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; animation: fadeUp .8s ease .6s both; }
+      .hero .meta-item { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--text3); }
+      .hero .meta-item strong { color: var(--text); font-family: var(--mono); }
+      @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+      @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+      .section { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+      .section-header { margin-bottom: 3rem; }
+      .section-header h2 { font-size: 2rem; font-weight: 700; }
+      .section-header p { color: var(--text2); margin-top: .5rem; }
+      .komp-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 1rem; margin: 2rem 0; }
+      .komp-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; transition: .3s; }
+      .komp-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(108,92,231,.15); }
+      .komp-card .id { font-family: var(--mono); font-size: .75rem; font-weight: 700; color: var(--accent); margin-bottom: .3rem; }
+      .komp-card .desc { font-size: .85rem; color: var(--text2); line-height: 1.5; }
+      .content-block { margin-bottom: 3rem; }
+      .content-block h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
+      .content-block h3 .tag { font-family: var(--mono); font-size: .7rem; background: var(--accent); color: #fff; padding: .15rem .5rem; border-radius: 4px; font-weight: 500; }
+      .content-block h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 .5rem; color: var(--text); }
+      .content-block p { color: var(--text2); margin-bottom: .8rem; }
+      .content-block strong { color: var(--text); }
+      .lernziel { background: var(--bg2); border-left: 3px solid var(--accent); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; font-size: .9rem; }
+      .lernziel span { color: var(--accent); font-family: var(--mono); font-size: .7rem; font-weight: 700; display: block; margin-bottom: .3rem; }
+      .table-wrap { overflow-x: auto; margin: 1rem 0; border-radius: 8px; border: 1px solid var(--border); }
+      table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+      th { background: var(--bg3); text-align: left; padding: .7rem 1rem; font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text3); border-bottom: 1px solid var(--border); }
+      td { padding: .6rem 1rem; border-bottom: 1px solid var(--border); color: var(--text2); }
+      tr:last-child td { border-bottom: none; }
+      tr:hover td { background: rgba(108,92,231,.03); }
+      .screenshot { margin: 1.5rem 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--bg2); }
+      .screenshot iframe, .screenshot img { width: 100%; display: block; border: none; }
+      .screenshot .caption { padding: .6rem 1rem; font-size: .75rem; color: var(--text3); font-family: var(--mono); border-top: 1px solid var(--border); display: flex; align-items: center; gap: .5rem; }
+      .screenshot .caption::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+      .screenshot .caption-text { flex: 1; }
+      .tip { background: rgba(0,210,255,.05); border: 1px solid rgba(0,210,255,.15); border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; font-size: .85rem; color: var(--accent3); }
+      .tip::before { content: "💡"; margin-right: .5rem; }
+      .what-you-see { background: var(--bg3); border: 1px solid var(--border); border-radius: 0 0 8px 8px; padding: .7rem 1rem; font-size: .8rem; color: var(--text2); margin-top: -1.5rem; margin-bottom: 1.5rem; }
+      .what-you-see strong { color: var(--accent3); }
+      details { margin: 1rem 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg2); }
+      details summary { padding: .8rem 1rem; cursor: pointer; font-family: var(--mono); font-size: .85rem; font-weight: 500; color: var(--accent3); background: var(--bg3); user-select: none; list-style: none; display: flex; align-items: center; gap: .5rem; }
+      details summary::before { content: "▶"; font-size: .6rem; transition: transform .2s; }
+      details[open] summary::before { transform: rotate(90deg); }
+      details summary:hover { background: var(--bg4); }
+      details pre { margin: 0; padding: 1rem; font-family: var(--mono); font-size: .78rem; color: var(--green); overflow-x: auto; line-height: 1.7; white-space: pre; background: var(--bg); }
+      .divider { height: 1px; background: linear-gradient(90deg,transparent,var(--border),transparent); margin: 4rem 0; }
+      .phase-sep { padding: 5rem 2rem; text-align: center; position: relative; }
+      .phase-sep h2 { font-size: clamp(1.8rem,4vw,3rem); font-weight: 800; }
+      .phase-sep h2 span { background: linear-gradient(135deg,var(--accent),var(--accent3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .phase-sep .num { font-family: var(--mono); font-size: 8rem; font-weight: 800; color: var(--bg3); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: -1; }
+      footer { text-align: center; padding: 3rem 2rem; color: var(--text3); font-size: .8rem; border-top: 1px solid var(--border); }
+      footer a { color: var(--accent); text-decoration: none; }
+      .reveal { opacity: 0; transform: translateY(30px); transition: .8s ease; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .sources { font-size: .75rem; color: var(--text3); margin-top: .5rem; padding: .5rem .8rem; background: var(--bg2); border-radius: 6px; border-left: 2px solid var(--accent3); }
+      .sources a { color: var(--accent3); text-decoration: none; }
+      .sources a:hover { text-decoration: underline; }
+      .pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+      .pro-con .pro { background: rgba(16,185,129,.06); border: 1px solid rgba(16,185,129,.2); border-radius: 8px; padding: 1rem; }
+      .pro-con .con { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.2); border-radius: 8px; padding: 1rem; }
+      .pro-con h5 { font-size: .8rem; font-weight: 700; margin-bottom: .5rem; font-family: var(--mono); }
+      .pro-con .pro h5 { color: var(--green); }
+      .pro-con .con h5 { color: var(--red); }
+      .pro-con p { font-size: .82rem; color: var(--text2); margin: 0; }
+      @media(max-width:600px){ .pro-con { grid-template-columns: 1fr; } }
     </style>
   </head>
   <body>
     <nav>
       <div class="logo">&gt; devboard_docs</div>
       <div class="links">
-        <a href="#kompetenzen">Kompetenzen</a><a href="#phase1">Phase 1</a
-        ><a href="#phase2">Phase 2</a><a href="#phase3">Phase 3</a
-        ><a href="#phase4">Phase 4</a><a href="#reflexion">Reflexion</a>
+        <a href="#kompetenzen">Kompetenzen</a>
+        <a href="#phase1">Phase 1</a>
+        <a href="#phase2">Phase 2</a>
+        <a href="#phase3">Phase 3</a>
+        <a href="#phase4">Phase 4</a>
+        <a href="#reflexion">Reflexion</a>
       </div>
     </nav>
+
     <div class="hero">
       <div class="badge">MODUL 347 — DIENSTE MIT CONTAINERN IMPLEMENTIEREN</div>
       <h1><span>DevBoard</span><br />Multi-Container Webapp</h1>
-      <p class="sub">
-        Ein Task-Board als Full-Stack Webanwendung mit 3 Docker Containern.
-        Gebaut, deployed, gescannt und dokumentiert.
-      </p>
+      <p class="sub">Ein Task-Board als Full-Stack Webanwendung mit 3 Docker Containern. Gebaut, deployed, gescannt und dokumentiert.</p>
       <div class="meta">
         <div class="meta-item">👥 <strong>Kaya, Vuk, Pascal, Erë-Blin &amp; Matteo</strong></div>
         <div class="meta-item">🛠 <strong>Claude, Docker</strong></div>
@@ -516,121 +121,43 @@
         <div class="meta-item">⏱ <strong>~3 Tage</strong></div>
       </div>
     </div>
+
     <section class="section" id="kompetenzen">
       <div class="section-header reveal">
         <h2>Abgedeckte Kompetenzen</h2>
         <p>Alles was wir mit diesem Projekt abdecken:</p>
       </div>
       <div class="komp-grid">
-        <div class="komp-card reveal">
-          <div class="id">A1F</div>
-          <div class="desc">
-            Anforderungen für containerisierten Dienst erfassen
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">A1E</div>
-          <div class="desc">
-            Anforderungen analysieren, Verbesserungen vorschlagen
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">B1E</div>
-          <div class="desc">
-            Mehrere Kompositions-Varianten vergleichen + begründen
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">B2E</div>
-          <div class="desc">Netzwerkdiagramm für sicheren Containerbetrieb</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">C1G</div>
-          <div class="desc">
-            Dienste von Container-Plattform-Anbietern aufzählen
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">C1F</div>
-          <div class="desc">Cloud-Anbieter Vor- und Nachteile vergleichen</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">C1E</div>
-          <div class="desc">Entscheidungsmatrix für Containerdienstleister</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">C2G</div>
-          <div class="desc">Container-Registry Merkmale + Beispiele nennen</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">C2F</div>
-          <div class="desc">
-            Orchestrierungstechnologien aufzählen + beschreiben
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">C2E</div>
-          <div class="desc">Public vs. Private Container Registry erklären</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">D1E</div>
-          <div class="desc">
-            Umfangreiche Container-Konfiguration + Fehler beheben
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">D2G</div>
-          <div class="desc">Images beziehen, starten, stoppen, löschen</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">D2F</div>
-          <div class="desc">Eigene Images in Registry publizieren</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">D2E</div>
-          <div class="desc">Images in mehrere Registries publizieren</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">F1G</div>
-          <div class="desc">Methoden zur Qualitätssicherung aufzählen</div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">F1F</div>
-          <div class="desc">
-            Sicherheitsindikatoren für Container beschreiben
-          </div>
-        </div>
-        <div class="komp-card reveal">
-          <div class="id">F1E</div>
-          <div class="desc">Sicherheitslücken finden + beheben</div>
-        </div>
+        <div class="komp-card reveal"><div class="id">A1F</div><div class="desc">Anforderungen für containerisierten Dienst erfassen</div></div>
+        <div class="komp-card reveal"><div class="id">A1E</div><div class="desc">Anforderungen analysieren, Verbesserungen vorschlagen</div></div>
+        <div class="komp-card reveal"><div class="id">B1E</div><div class="desc">Mehrere Kompositions-Varianten vergleichen + begründen</div></div>
+        <div class="komp-card reveal"><div class="id">B2E</div><div class="desc">Netzwerkdiagramm für sicheren Containerbetrieb</div></div>
+        <div class="komp-card reveal"><div class="id">C1G</div><div class="desc">Dienste von Container-Plattform-Anbietern aufzählen</div></div>
+        <div class="komp-card reveal"><div class="id">C1F</div><div class="desc">Cloud-Anbieter Vor- und Nachteile vergleichen</div></div>
+        <div class="komp-card reveal"><div class="id">C1E</div><div class="desc">Entscheidungsmatrix für Containerdienstleister</div></div>
+        <div class="komp-card reveal"><div class="id">C2G</div><div class="desc">Container-Registry Merkmale + Beispiele nennen</div></div>
+        <div class="komp-card reveal"><div class="id">C2F</div><div class="desc">Orchestrierungstechnologien aufzählen + beschreiben</div></div>
+        <div class="komp-card reveal"><div class="id">C2E</div><div class="desc">Public vs. Private Container Registry erklären</div></div>
+        <div class="komp-card reveal"><div class="id">D1E</div><div class="desc">Umfangreiche Container-Konfiguration + Fehler beheben</div></div>
+        <div class="komp-card reveal"><div class="id">D2G</div><div class="desc">Images beziehen, starten, stoppen, löschen</div></div>
+        <div class="komp-card reveal"><div class="id">D2F</div><div class="desc">Eigene Images in Registry publizieren</div></div>
+        <div class="komp-card reveal"><div class="id">D2E</div><div class="desc">Images in mehrere Registries publizieren</div></div>
+        <div class="komp-card reveal"><div class="id">F1G</div><div class="desc">Methoden zur Qualitätssicherung aufzählen</div></div>
+        <div class="komp-card reveal"><div class="id">F1F</div><div class="desc">Sicherheitsindikatoren für Container beschreiben</div></div>
+        <div class="komp-card reveal"><div class="id">F1E</div><div class="desc">Sicherheitslücken finden + beheben</div></div>
       </div>
     </section>
+
     <div class="divider"></div>
-    <div class="phase-sep" id="phase1">
-      <div class="num">01</div>
-      <h2 class="reveal">
-        Phase 1: <span>Anforderungen &amp; Architektur</span>
-      </h2>
-    </div>
+    <div class="phase-sep" id="phase1"><div class="num">01</div><h2 class="reveal">Phase 1: <span>Anforderungen &amp; Architektur</span></h2></div>
+
     <section class="section">
+      <!-- A1F -->
       <div class="content-block reveal">
         <h3><span class="tag">A1F</span> Anforderungen erfassen</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann bis Ende des Projekts die
-          funktionalen und nicht-funktionalen Anforderungen für eine
-          containerisierte Webanwendung (DevBoard) in einer Anforderungsliste
-          dokumentieren.
-        </div>
-        <p>
-          Bevor wir irgendwas mit Docker machen, müssen wir zuerst wissen was
-          unsere App überhaupt können soll. Ohne klare Anforderungen wissen wir
-          nicht welche Container wir brauchen und wie die miteinander reden.
-        </p>
-        <p>
-          Wir haben uns für ein einfaches Task-Board entschieden: das DevBoard.
-          Damit kann man Tasks erstellen, anzeigen und löschen.
-        </p>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann bis Ende des Projekts die funktionalen und nicht-funktionalen Anforderungen für eine containerisierte Webanwendung (DevBoard) in einer Anforderungsliste dokumentieren.</div>
+        <p>Bevor wir irgendwas mit Docker machen, müssen wir zuerst wissen was unsere App überhaupt können soll. Ohne klare Anforderungen wissen wir nicht welche Container wir brauchen und wie die miteinander reden.</p>
+        <p>Wir haben uns für ein einfaches Task-Board entschieden: das DevBoard. Damit kann man Tasks erstellen, anzeigen und löschen.</p>
         <h4>Funktionale Anforderungen</h4>
         <p>
           - Tasks anzeigen: eine Übersicht aller Tasks im Board<br />
@@ -642,524 +169,241 @@
         <h4>Nicht-funktionale Anforderungen</h4>
         <p>
           - Containerisiert: Jeder Dienst läuft in seinem eigenen Container<br />
-          - Reproduzierbar: <code>docker compose up</code> startet die gesamte
-          App<br />
-          - Isolierte Netzwerke: Die Datenbank ist nicht direkt von aussen
-          erreichbar<br />
+          - Reproduzierbar: <code>docker compose up</code> startet die gesamte App<br />
+          - Isolierte Netzwerke: Die Datenbank ist nicht direkt von aussen erreichbar<br />
           - Daten-Persistenz: Die DB-Daten liegen auf einem Docker Volume<br />
           - Portabilität: Die Anwendung läuft auf jedem System mit Docker
         </p>
-        <p class="sources">
-          Quellen:
-          <a href="https://visuresolutions.com/de/Almf%C3%BChrer/funktionale-vs.-nicht-funktionale-Anforderungen/">visuresolutions.com</a>
-        </p>
+        <p class="sources">Quellen: <a href="https://visuresolutions.com/de/Almf%C3%BChrer/funktionale-vs.-nicht-funktionale-Anforderungen/">visuresolutions.com</a></p>
         <h4>Technologie-Entscheid</h4>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Komponente</th>
-              <th>Technologie</th>
-              <th>Warum?</th>
-            </tr>
-            <tr>
-              <td>Frontend</td>
-              <td>Nginx + HTML/JS</td>
-              <td>Leichtgewichtig und schnell</td>
-            </tr>
-            <tr>
-              <td>Backend</td>
-              <td>Python Flask</td>
-              <td>Einfache REST API, wenig Boilerplate</td>
-            </tr>
-            <tr>
-              <td>Datenbank</td>
-              <td>PostgreSQL</td>
-              <td>Robust, Open Source, weit verbreitet</td>
-            </tr>
-            <tr>
-              <td>Orchestrierung</td>
-              <td>Docker Compose</td>
-              <td>Perfekt für Multi-Container auf einem Host</td>
-            </tr>
-          </table>
-        </div>
+        <div class="table-wrap"><table>
+          <tr><th>Komponente</th><th>Technologie</th><th>Warum?</th></tr>
+          <tr><td>Frontend</td><td>Nginx + HTML/JS</td><td>Leichtgewichtig und schnell</td></tr>
+          <tr><td>Backend</td><td>Python Flask</td><td>Einfache REST API, wenig Boilerplate</td></tr>
+          <tr><td>Datenbank</td><td>PostgreSQL</td><td>Robust, Open Source, weit verbreitet</td></tr>
+          <tr><td>Orchestrierung</td><td>Docker Compose</td><td>Perfekt für Multi-Container auf einem Host</td></tr>
+        </table></div>
       </div>
+
+      <!-- A1E -->
       <div class="content-block reveal">
-        <h3>
-          <span class="tag">A1E</span> Anforderungen analysieren &amp;
-          verbessern
-        </h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann die erfassten Anforderungen
-          kritisch analysieren und mindestens 3 konkrete Verbesserungsvorschläge
-          formulieren und begründen.
-        </div>
-        <p>
-          Nachdem wir die Anforderungen aufgeschrieben haben, haben wir geschaut
-          was man noch besser machen kann:
-        </p>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Verbesserung</th>
-              <th>Problem ohne</th>
-              <th>Unsere Lösung</th>
-            </tr>
-            <tr>
-              <td><strong>Health-Checks</strong></td>
-              <td>Docker weiss nicht ob ein Container wirklich funktioniert</td>
-              <td><code>healthcheck</code> in docker-compose.yml</td>
-            </tr>
-            <tr>
-              <td><strong>Resource Limits</strong></td>
-              <td>Ein Container kann den ganzen RAM fressen</td>
-              <td>
-                <code>mem_limit</code> und <code>cpus</code> pro Container
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Restart Policy</strong></td>
-              <td>Container bleibt nach Crash einfach tot</td>
-              <td><code>restart: unless-stopped</code></td>
-            </tr>
-            <tr>
-              <td><strong>Environment Vars</strong></td>
-              <td>Passwörter im Code = Sicherheitsrisiko</td>
-              <td><code>.env</code> Dateien benutzen</td>
-            </tr>
-          </table>
-          <p class="sources">
-            Quellen:
-          <a href="https://www.johner-institut.de/blog/iec-62304-medizinische-software/funktionale-und-nicht-funktionale-anforderungen/">johner-institut</a>
-        </p>
-        </div>
+        <h3><span class="tag">A1E</span> Anforderungen analysieren &amp; verbessern</h3>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann die erfassten Anforderungen kritisch analysieren und mindestens 3 konkrete Verbesserungsvorschläge formulieren und begründen.</div>
+        <p>Nachdem wir die Anforderungen aufgeschrieben haben, haben wir geschaut was man noch besser machen kann. Ohne diese Verbesserungen würde die App zwar laufen, wäre aber weder stabil noch sicher:</p>
+        <div class="table-wrap"><table>
+          <tr><th>Verbesserung</th><th>Problem ohne</th><th>Unsere Lösung</th></tr>
+          <tr><td><strong>Health-Checks</strong></td><td>Docker weiss nicht ob ein Container wirklich funktioniert — er könnte als "running" gelten obwohl die App drin hängt</td><td><code>healthcheck</code> in docker-compose.yml => Docker prüft den Zustand und startet den Container neu wenn er hängt</td></tr>
+          <tr><td><strong>Resource Limits</strong></td><td>Ein Container kann den ganzen RAM fressen und die anderen Container zum Absturz bringen</td><td><code>mem_limit: 256m</code> und <code>cpus: 0.5</code> pro Container setzen</td></tr>
+          <tr><td><strong>Restart Policy</strong></td><td>Container bleibt nach Crash einfach tot => App ist offline bis jemand manuell eingreift</td><td><code>restart: unless-stopped</code> => Docker startet ihn automatisch neu</td></tr>
+          <tr><td><strong>Environment Vars</strong></td><td>Passwörter direkt im Code oder Dockerfile => wer den Code klont sieht das Passwort</td><td><code>.env</code> Datei benutzen => wird nicht ins Git committed</td></tr>
+        </table></div>
+        <p class="sources">Quellen: <a href="https://www.johner-institut.de/blog/iec-62304-medizinische-software/funktionale-und-nicht-funktionale-anforderungen/">johner-institut</a></p>
       </div>
+
+      <!-- B1E -->
       <div class="content-block reveal">
         <h3><span class="tag">B1E</span> Kompositions-Varianten</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann mindestens 2
-          Container-Kompositions-Varianten vorschlagen, vergleichen und die
-          gewählte Variante begründen.
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 2 Container-Kompositions-Varianten vorschlagen, vergleichen und die gewählte Variante begründen.</div>
+        <p>Wir haben 3 Möglichkeiten verglichen wie man die App aufbauen könnte:</p>
+        <div class="table-wrap"><table>
+          <tr><th>Kriterium</th><th>Monolith</th><th>Docker Compose</th><th>Kubernetes</th></tr>
+          <tr><td>Was ist das?</td><td>Alles in einem Container</td><td>3 separate Container, ein YAML</td><td>Jeder Dienst als Pod</td></tr>
+          <tr><td>Skalierbarkeit</td><td>Geht nicht</td><td>Pro Container, ein Host</td><td>Volle Skalierung</td></tr>
+          <tr><td>Komplexität</td><td>Super einfach</td><td>Geht klar</td><td>Ziemlich komplex</td></tr>
+          <tr><td>Wartbarkeit</td><td>Mühsam</td><td>Gut</td><td>Sehr gut</td></tr>
+          <tr><td>Wofür?</td><td>Schnelle Demos</td><td>Entwicklung, Lernen</td><td>Produktion</td></tr>
+        </table></div>
+
+        <h4>Vor- und Nachteile der Varianten</h4>
+        <p><strong>Variante 1 – Monolith:</strong></p>
+        <div class="pro-con">
+          <div class="pro"><h5>✓ Vorteile</h5><p>Extrem einfach zu starten, ein einziger <code>docker run</code> Befehl reicht</p></div>
+          <div class="con"><h5>✗ Nachteile</h5><p>Widerspricht dem Container-Prinzip "ein Prozess pro Container". Wenn Flask abstürzt, reisst es Nginx und PostgreSQL mit. Nicht skalierbar.</p></div>
         </div>
-        <p>Wir haben 3 Möglichkeiten verglichen:</p>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Kriterium</th>
-              <th>Monolith</th>
-              <th>Docker Compose</th>
-              <th>Kubernetes</th>
-            </tr>
-            <tr>
-              <td>Was ist das?</td>
-              <td>Alles in einem Container</td>
-              <td>3 separate Container, ein YAML</td>
-              <td>Jeder Dienst als Pod</td>
-            </tr>
-            <tr>
-              <td>Skalierbarkeit</td>
-              <td>Geht nicht</td>
-              <td>Pro Container, ein Host</td>
-              <td>Volle Skalierung</td>
-            </tr>
-            <tr>
-              <td>Komplexität</td>
-              <td>Super einfach</td>
-              <td>Geht klar</td>
-              <td>Ziemlich komplex</td>
-            </tr>
-            <tr>
-              <td>Wartbarkeit</td>
-              <td>Mühsam</td>
-              <td>Gut</td>
-              <td>Sehr gut</td>
-            </tr>
-            <tr>
-              <td>Wofür?</td>
-              <td>Schnelle Demos</td>
-              <td>Entwicklung, Lernen</td>
-              <td>Produktion</td>
-            </tr>
-          </table>
+        <p><strong>Variante 2 – Docker Compose (unser Entscheid):</strong></p>
+        <div class="pro-con">
+          <div class="pro"><h5>✓ Vorteile</h5><p>Jeder Service läuft isoliert, kann einzeln neu gestartet werden. Netzwerktrennung möglich. Eine YAML-Datei reicht für alles.</p></div>
+          <div class="con"><h5>✗ Nachteile</h5><p>Läuft nur auf einem Host — kein automatisches Verteilen auf mehrere Maschinen möglich.</p></div>
         </div>
-        <p>
-          <strong>Unser Entscheid: Docker Compose.</strong> Für DevBoard brauchen wir die Trennung in 3 Container (damit die DB nicht direkt von aussen erreichbar ist), aber kein Kubernetes-Cluster. Monolith widerspricht dem Container-Grundprinzip "ein Prozess pro Container" und wenn Flask abstürzt, reisst es Nginx und PostgreSQL mit. Kubernetes wäre mit Cluster-Setup, Deployments, Services und Ingress-Config massiver Overkill für ein Lernprojekt mit 3 Containern auf einem Rechner.
-        </p>
+        <p><strong>Variante 3 – Kubernetes:</strong></p>
+        <div class="pro-con">
+          <div class="pro"><h5>✓ Vorteile</h5><p>Auto-Scaling, Self-Healing, Rolling Updates ohne Downtime. Für grosse Produktionssysteme der Standard.</p></div>
+          <div class="con"><h5>✗ Nachteile</h5><p>Cluster-Setup, Deployments, Services, Ingress-Config — massiver Overkill für 3 Container auf einem Laptop.</p></div>
+        </div>
+        <p><strong>Unser Entscheid: Docker Compose.</strong> Für DevBoard brauchen wir die Trennung in 3 Container (damit die DB nicht von aussen erreichbar ist), aber keinen Kubernetes-Cluster. Beste Balance für ein Lernprojekt.</p>
       </div>
+
+      <!-- B2E -->
       <div class="content-block reveal">
         <h3><span class="tag">B2E</span> Netzwerkdiagramm</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann ein vollständiges Netzwerkdiagramm
-          erstellen, das alle Container, Netzwerke, Ports und den Datenfluss
-          zeigt.
-        </div>
-        <p>
-          Um zu zeigen wie unsere Container miteinander verbunden sind, haben
-          wir ein Netzwerkdiagramm erstellt:
-        </p>
-        <div class="tip">
-          Dieses Netzwerkdiagramm wurde erstellt mit <a href="https://app.diagrams.net/"><strong>draw.io</strong></a>.
-        </div>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann ein vollständiges Netzwerkdiagramm erstellen, das alle Container, Netzwerke, Ports und den Datenfluss zeigt.</div>
+        <p>Um zu zeigen wie unsere Container miteinander verbunden sind, haben wir ein Netzwerkdiagramm erstellt:</p>
+        <div class="tip">Dieses Netzwerkdiagramm wurde erstellt mit <a href="https://app.diagrams.net/"><strong>draw.io</strong></a>.</div>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1iV1Ap4qan_PqZACLRBSSyXkKFDjdfJpd/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">Netzwerkdiagramm der DevBoard-Anwendung</div>
+          <iframe src="https://drive.google.com/file/d/1iV1Ap4qan_PqZACLRBSSyXkKFDjdfJpd/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Netzwerkdiagramm — zeigt alle 3 Container (Nginx, Flask, PostgreSQL), die 2 Docker-Netzwerke und den Datenfluss vom Browser bis zur Datenbank</span></div>
         </div>
-        <p>
-          <strong>Warum zwei Netzwerke?</strong> Das frontend-network ist nach
-          aussen exponiert (Port 8080), aber das backend-network ist komplett
-          intern (<code>internal: true</code>). PostgreSQL ist nie direkt vom
-          Browser erreichbar, also kann nur Flask mit der Datenbank reden.
-        </p>
+        <div class="what-you-see">
+          <strong>Was man im Diagramm sieht:</strong> Oben das frontend-network (blau) mit Nginx und Flask — dieses Netzwerk ist über Port 8080 von aussen erreichbar. Unten das backend-network (rot) mit Flask und PostgreSQL — dieses ist <code>internal: true</code> und hat keinen Internetzugang. Flask ist in beiden Netzwerken und ist damit die einzige Brücke. Das pgdata Volume (grau) hängt an PostgreSQL und sorgt für persistente Datenspeicherung.
+        </div>
+        <p><strong>Warum zwei Netzwerke?</strong> Das frontend-network ist nach aussen exponiert (Port 8080), aber das backend-network ist komplett intern. PostgreSQL ist nie direkt vom Browser erreichbar — nur Flask kann mit der DB reden.</p>
       </div>
     </section>
+
     <div class="divider"></div>
-    <div class="phase-sep" id="phase2">
-      <div class="num">02</div>
-      <h2 class="reveal">Phase 2: <span>Cloud &amp; Registries</span></h2>
-    </div>
+    <div class="phase-sep" id="phase2"><div class="num">02</div><h2 class="reveal">Phase 2: <span>Cloud &amp; Registries</span></h2></div>
+
     <section class="section">
+      <!-- C1G -->
       <div class="content-block reveal">
         <h3><span class="tag">C1G</span> Container-Plattform-Anbieter</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann die wichtigsten Dienste von
-          mindestens 3 Container-Plattform-Anbietern aufzählen und deren
-          Kernfunktionen beschreiben.
-        </div>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann die wichtigsten Dienste von mindestens 3 Container-Plattform-Anbietern aufzählen und deren Kernfunktionen beschreiben.</div>
         <p>Wir haben uns die drei grössten Cloud-Anbieter angeschaut:</p>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Anbieter</th>
-              <th>Dienste</th>
-              <th>Was können die?</th>
-            </tr>
-            <tr>
-              <td><strong>AWS</strong></td>
-              <td>ECS, Fargate, EKS</td>
-              <td>
-                Fully managed Container-Orchestrierung (ECS), serverloses Hosting (Fargate), Managed K8s (EKS), ECR
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Azure</strong></td>
-              <td>ACI, AKS, Container Apps</td>
-              <td>
-                Container on-demand (ACI), Managed K8s mit kostenloser Control Plane (AKS), Serverless Container Apps, ACR
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Google Cloud</strong></td>
-              <td>Cloud Run, GKE</td>
-              <td>Fully managed Serverless-Plattform mit Scale-to-Zero (Cloud Run), Autopilot-K8s (GKE), GPU-Support für AI-Workloads, Artifact Registry</td>
-            </tr>
-          </table>
-        </div>
-        <p class="sources">
-          Quellen:
-          <a href="https://aws.amazon.com/ecs/getting-started/">aws.amazon.com/ecs</a>,
-          <a href="https://azure.microsoft.com/en-us/products/container-instances">azure.microsoft.com/container-instances</a>,
-          <a href="https://cloud.google.com/run">cloud.google.com/run</a>
-        </p>
+        <div class="table-wrap"><table>
+          <tr><th>Anbieter</th><th>Dienste</th><th>Was können die?</th></tr>
+          <tr><td><strong>AWS</strong></td><td>ECS, Fargate, EKS</td><td>Fully managed Container-Orchestrierung (ECS), serverloses Hosting (Fargate), Managed K8s (EKS), ECR</td></tr>
+          <tr><td><strong>Azure</strong></td><td>ACI, AKS, Container Apps</td><td>Container on-demand (ACI), Managed K8s mit kostenloser Control Plane (AKS), Serverless Container Apps, ACR</td></tr>
+          <tr><td><strong>Google Cloud</strong></td><td>Cloud Run, GKE</td><td>Fully managed Serverless-Plattform mit Scale-to-Zero (Cloud Run), Autopilot-K8s (GKE), GPU-Support, Artifact Registry</td></tr>
+        </table></div>
+        <p class="sources">Quellen: <a href="https://aws.amazon.com/ecs/getting-started/">aws.amazon.com/ecs</a>, <a href="https://azure.microsoft.com/en-us/products/container-instances">azure.microsoft.com</a>, <a href="https://cloud.google.com/run">cloud.google.com/run</a></p>
       </div>
+
+      <!-- C1F -->
       <div class="content-block reveal">
         <h3><span class="tag">C1F</span> Cloud-Anbieter Vergleich</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann die Vor- und Nachteile von
-          mindestens 3 Public-Cloud-Anbietern in einer Vergleichstabelle
-          darstellen.
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann die Vor- und Nachteile von mindestens 3 Public-Cloud-Anbietern in einer Vergleichstabelle darstellen.</div>
+        <div class="table-wrap"><table>
+          <tr><th></th><th>AWS</th><th>Azure</th><th>Google Cloud</th></tr>
+          <tr><td>Marktanteil</td><td>~30%</td><td>~23%</td><td>~13%</td></tr>
+          <tr><td>Einstieg</td><td>Komplex, 200+ Services</td><td>Gute Microsoft-Integration (O365, AD)</td><td>Am einfachsten (Cloud Run)</td></tr>
+          <tr><td>Kosten</td><td>Free Tier 12 Mt., Savings Plans bis 72%</td><td>Free Tier 12 Mt., Hybrid Benefit</td><td>Sustained-use Discounts bis 30%, Pay-per-Request</td></tr>
+          <tr><td>K8s</td><td>EKS (extra Service)</td><td>AKS (kostenlose Control Plane)</td><td>GKE Autopilot (sehr ausgereift)</td></tr>
+          <tr><td>Vorteil</td><td>Grösstes Ökosystem, Custom Chips (Graviton)</td><td>Hybrid mit Azure Arc, 100+ Compliance-Zertifizierungen</td><td>Bestes K8s (Erfinder!), Analytics + AI Leader</td></tr>
+          <tr><td>Nachteil</td><td>Steile Lernkurve</td><td>Weniger Container-fokus</td><td>Kleinerer Marktanteil</td></tr>
+        </table></div>
+
+        <h4>Pro/Contra für unser Lernprojekt</h4>
+        <div class="pro-con">
+          <div class="pro"><h5>✓ AWS</h5><p>Grösstes Ökosystem, beste Doku, viele Tutorials. Gut wenn man später in einem grossen Unternehmen arbeitet.</p></div>
+          <div class="con"><h5>✗ AWS</h5><p>200+ Services macht den Einstieg verwirrend. Für ein Lernprojekt zu komplex.</p></div>
         </div>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th></th>
-              <th>AWS</th>
-              <th>Azure</th>
-              <th>Google Cloud</th>
-            </tr>
-            <tr>
-              <td>Marktanteil</td>
-              <td>~30%</td>
-              <td>~23%</td>
-              <td>~13%</td>
-            </tr>
-            <tr>
-              <td>Einstieg</td>
-              <td>Komplex, 200+ Services</td>
-              <td>Gute Microsoft-Integration (O365, AD)</td>
-              <td>Am einfachsten (Cloud Run)</td>
-            </tr>
-            <tr>
-              <td>Kosten</td>
-              <td>Free Tier 12 Mt., Savings Plans bis 72%</td>
-              <td>Free Tier 12 Mt., Hybrid Benefit für bestehende Lizenzen</td>
-              <td>Sustained-use Discounts bis 30%, Pay-per-Request</td>
-            </tr>
-            <tr>
-              <td>K8s</td>
-              <td>EKS (extra Service)</td>
-              <td>AKS (kostenlose Control Plane)</td>
-              <td>GKE Autopilot (sehr ausgereift)</td>
-            </tr>
-            <tr>
-              <td>Vorteil</td>
-              <td>Grösstes Ökosystem, Custom Chips (Graviton)</td>
-              <td>Hybrid mit Azure Arc, 100+ Compliance-Zertifizierungen</td>
-              <td>Bestes K8s (Erfinder!), Analytics + AI Leader</td>
-            </tr>
-            <tr>
-              <td>Nachteil</td>
-              <td>Steile Lernkurve</td>
-              <td>Weniger Container-fokus</td>
-              <td>Kleinerer Marktanteil</td>
-            </tr>
-          </table>
+        <div class="pro-con">
+          <div class="pro"><h5>✓ Azure</h5><p>Wenn man bereits Microsoft-Tools nutzt (Office 365, Active Directory) ist die Integration sehr gut. Schweizer Rechenzentrum vorhanden.</p></div>
+          <div class="con"><h5>✗ Azure</h5><p>Weniger auf Container fokussiert als AWS oder GCP. Container-spezifische Features fühlen sich manchmal nachträglich eingebaut an.</p></div>
         </div>
-        <p class="sources">
-          Quellen:
-          <a href="https://pilotcore.io/blog/aws-vs-azure-vs-google-cloud-comparison">pilotcore.io – AWS vs Azure vs GCP 2025</a>,
-          <a href="https://www.pluralsight.com/resources/blog/cloud/cloud-container-services-compared-aws-vs-azure-vs-gcp">pluralsight.com – Cloud Container Services Compared</a>
-        </p>
+        <div class="pro-con">
+          <div class="pro"><h5>✓ Google Cloud</h5><p>Cloud Run ist der einfachste Weg einen Container zu deployen — einfach Image pushen, fertig. Scale-to-Zero bedeutet man zahlt nichts wenn die App nicht genutzt wird.</p></div>
+          <div class="con"><h5>✗ Google Cloud</h5><p>Kleinerer Marktanteil bedeutet weniger Community-Support und weniger Stellenangebote die GCP-Kenntnisse verlangen.</p></div>
+        </div>
+        <p class="sources">Quellen: <a href="https://pilotcore.io/blog/aws-vs-azure-vs-google-cloud-comparison">pilotcore.io – AWS vs Azure vs GCP 2025</a>, <a href="https://www.pluralsight.com/resources/blog/cloud/cloud-container-services-compared-aws-vs-azure-vs-gcp">pluralsight.com</a></p>
       </div>
+
+      <!-- C1E -->
       <div class="content-block reveal">
         <h3><span class="tag">C1E</span> Entscheidungsmatrix</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann eine gewichtete
-          Entscheidungsmatrix mit mindestens 5 Kriterien erstellen und einen
-          Anbieter auswählen.
-        </div>
-        <p>
-          Um objektiv zu entscheiden haben wir eine gewichtete Matrix gebaut:
-        </p>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Kriterium (Gewicht)</th>
-              <th>AWS</th>
-              <th>Azure</th>
-              <th>Google Cloud</th>
-            </tr>
-            <tr>
-              <td>Einfachheit (30%)</td>
-              <td>2</td>
-              <td>3</td>
-              <td><strong>5</strong></td>
-            </tr>
-            <tr>
-              <td>Kosten (25%)</td>
-              <td>3</td>
-              <td>3</td>
-              <td><strong>5</strong></td>
-            </tr>
-            <tr>
-              <td>K8s-Support (20%)</td>
-              <td>4</td>
-              <td>4</td>
-              <td><strong>5</strong></td>
-            </tr>
-            <tr>
-              <td>Doku (15%)</td>
-              <td><strong>5</strong></td>
-              <td>4</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>CH-Rechenzentrum (10%)</td>
-              <td>4</td>
-              <td><strong>5</strong></td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td><strong>Score</strong></td>
-              <td><strong>3.15</strong></td>
-              <td><strong>3.55</strong></td>
-              <td><strong>4.80</strong></td>
-            </tr>
-          </table>
-        </div>
-        <div class="tip">
-          Visualisierung erstellt mit einem Online-Chart-Tool.
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann eine gewichtete Entscheidungsmatrix mit mindestens 5 Kriterien erstellen und einen Anbieter auswählen.</div>
+        <p>Um objektiv zu entscheiden haben wir eine gewichtete Matrix gebaut. Jedes Kriterium hat ein Gewicht (wie wichtig es uns ist) und jeder Anbieter kriegt Punkte von 1–5:</p>
+        <div class="table-wrap"><table>
+          <tr><th>Kriterium (Gewicht)</th><th>AWS</th><th>Azure</th><th>Google Cloud</th></tr>
+          <tr><td>Einfachheit (30%)</td><td>2</td><td>3</td><td><strong>5</strong></td></tr>
+          <tr><td>Kosten (25%)</td><td>3</td><td>3</td><td><strong>5</strong></td></tr>
+          <tr><td>K8s-Support (20%)</td><td>4</td><td>4</td><td><strong>5</strong></td></tr>
+          <tr><td>Doku (15%)</td><td><strong>5</strong></td><td>4</td><td>4</td></tr>
+          <tr><td>CH-Rechenzentrum (10%)</td><td>4</td><td><strong>5</strong></td><td>4</td></tr>
+          <tr><td><strong>Score</strong></td><td><strong>3.15</strong></td><td><strong>3.55</strong></td><td><strong>4.80</strong></td></tr>
+        </table></div>
+        <div class="tip">Visualisierung erstellt mit einem Online-Chart-Tool. Geht auch mit <strong>Canva</strong> oder <strong>Google Sheets</strong>.</div>
+        <div class="screenshot">
+          <iframe src="https://drive.google.com/file/d/1zypX4Oqn7mLjTjWNlp70sH8x1jFsaEt9/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">AWS Entscheidungsmatrix — Kreisdiagramm zeigt die gewichteten Kriterien. Der grosse Anteil von "Dokumentation" (23.64%) erklärt AWS' Stärke, aber der kleine "Einfachheit"-Anteil (9.46%) zeigt warum es für uns nicht ideal ist. Gewichteter Score: 3.15</span></div>
         </div>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1zypX4Oqn7mLjTjWNlp70sH8x1jFsaEt9/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">AWS: Score 3.15</div>
+          <iframe src="https://drive.google.com/file/d/1uVZgL-WMmqM1cEx1LpORCTw-Lg3Q6ufG/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Azure Entscheidungsmatrix — CH-Rechenzentrum (22.17%) ist Azure's grösster Pluspunkt für uns. Einfachheit und Kosten sind aber schlechter als Google Cloud. Gewichteter Score: 3.55</span></div>
         </div>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1uVZgL-WMmqM1cEx1LpORCTw-Lg3Q6ufG/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">Azure: Score 3.55</div>
+          <iframe src="https://drive.google.com/file/d/1TkXMUJ0UHp5aXbT_wgRlcSxngOw9V3Dh/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Google Cloud Entscheidungsmatrix — die gleichmässige Verteilung zeigt dass Google Cloud in allen Kriterien gut abschneidet. Einfachheit (17.99%) und Kosten (17.99%) sind am stärksten gewichtet und hier gewinnt GCP klar. Gewichteter Score: 4.80</span></div>
         </div>
-        <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1TkXMUJ0UHp5aXbT_wgRlcSxngOw9V3Dh/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">Google Cloud: Score 4.80</div>
-        </div>
-        <p>
-          <strong>Entscheid: Google Cloud Run.</strong> Einfachster Einstieg,
-          bester Free Tier, Scale-to-Zero (man zahlt nur wenn Code läuft), und K8s direkt dabei
-          wenn man skalieren will. Ausserdem ist Google Cloud seit 2007 CO₂-neutral.
-        </p>
-        <p class="sources">
-          Quellen:
-          <a href="https://pilotcore.io/blog/aws-vs-azure-vs-google-cloud-comparison">pilotcore.io – AWS vs Azure vs GCP 2025</a>,
-          <a href="https://cloud.google.com/run">cloud.google.com/run</a>
-        </p>
+        <p><strong>Entscheid: Google Cloud Run.</strong> Einfachster Einstieg, bester Free Tier, Scale-to-Zero (man zahlt nur wenn Code läuft), und K8s direkt dabei wenn man skalieren will. Ausserdem ist Google Cloud seit 2007 CO₂-neutral.</p>
+        <p class="sources">Quellen: <a href="https://pilotcore.io/blog/aws-vs-azure-vs-google-cloud-comparison">pilotcore.io</a>, <a href="https://cloud.google.com/run">cloud.google.com/run</a></p>
       </div>
+
+      <!-- C2G -->
       <div class="content-block reveal">
         <h3><span class="tag">C2G</span> Was ist eine Container-Registry?</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann die Merkmale einer
-          Container-Registry nennen und mindestens 4 Beispiele aufzählen.
-        </div>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann die Merkmale einer Container-Registry nennen und mindestens 4 Beispiele aufzählen.</div>
+        <p>Eine Container-Registry ist im Grunde wie GitHub, aber für Docker Images statt Code:</p>
         <p>
-          Eine Container-Registry ist im Grunde wie GitHub, aber für Docker
-          Images statt Code:
+          <strong>- Tags:</strong> verschiedene Versionen (z.B. v1.0, latest)<br />
+          <strong>- Layer-basiert:</strong> nur geänderte Schichten werden hochgeladen, spart Bandbreite<br />
+          <strong>- Access Control:</strong> public oder private Repos mit feingranularen Berechtigungen<br />
+          <strong>- Vulnerability Scanning:</strong> automatisches Scannen nach bekannten CVEs
         </p>
-        <p>
-          <strong>- Tags:</strong> verschiedene Versionen (z.B. v1.0,latest)<br />
-          <strong>- Layer-basiert:</strong> nur geänderte Schichten werden
-          hochgeladen<br />
-          <strong>- Access Control:</strong> public oder private Repos<br />
-          <strong>- Vulnerability Scanning:</strong> automatisches Scannen nach
-          Lücken
-        </p>
-        <p>
-          <strong>Beispiele:</strong> <br />
-          - Docker Hub <br />
-          - GHCR <br />
-          - AWS ECR <br />
-          - Azure ACR <br />
-          - Google Artifact Registry <br />
+        <p><strong>Beispiele:</strong><br />
+          - Docker Hub — grösste öffentliche Registry, Default für Docker<br />
+          - GHCR (GitHub Container Registry) — direkt in GitHub integriert<br />
+          - AWS ECR — managed Registry in der AWS Cloud<br />
+          - Azure ACR — managed Registry in Azure<br />
+          - Google Artifact Registry — managed Registry in Google Cloud
         </p>
       </div>
+
+      <!-- C2F -->
       <div class="content-block reveal">
         <h3><span class="tag">C2F</span> Orchestrierungstechnologien</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann mindestens 3
-          Orchestrierungstechnologien aufzählen und deren Zweck beschreiben.
-        </div>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Technologie</th>
-              <th>Was macht das?</th>
-              <th>Wofür?</th>
-            </tr>
-            <tr>
-              <td><strong>Docker Compose</strong></td>
-              <td>Multi-Container auf einem Host via YAML. Definiert Services, Netzwerke und Volumes</td>
-              <td>Entwicklung, Testing, Lernen, kleine Projekte</td>
-            </tr>
-            <tr>
-              <td><strong>Kubernetes</strong></td>
-              <td>Industriestandard: Auto-Scaling, Self-Healing, Rolling Updates. Laut CNCF nutzen 82% der Container-User K8s in Produktion (2025)</td>
-              <td>Produktion, grosse verteilte Systeme</td>
-            </tr>
-            <tr>
-              <td><strong>Docker Swarm</strong></td>
-              <td>Dockers eigene Cluster-Lösung, native Docker-CLI Integration</td>
-              <td>Kleine Cluster. Seit Docker Engine v29 (2025) gibt es Breaking Changes und Kompatibilitätsprobleme – das Ökosystem schrumpft, selbst Mirantis fokussiert jetzt auf K8s</td>
-            </tr>
-          </table>
-        </div>
-        <p class="sources">
-          Quellen:
-          <a href="https://www.portainer.io/blog/docker-swarm-vs-kubernetes">portainer.io – Docker Swarm vs Kubernetes 2026</a>,
-          <a href="https://www.qovery.com/blog/kubernetes-vs-docker-what-are-the-differences">qovery.com – Kubernetes vs Docker</a>
-        </p>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 3 Orchestrierungstechnologien aufzählen und deren Zweck beschreiben.</div>
+        <div class="table-wrap"><table>
+          <tr><th>Technologie</th><th>Was macht das?</th><th>Wofür?</th></tr>
+          <tr><td><strong>Docker Compose</strong></td><td>Multi-Container auf einem Host via YAML. Definiert Services, Netzwerke und Volumes in einer Datei</td><td>Entwicklung, Testing, Lernen, kleine Projekte</td></tr>
+          <tr><td><strong>Kubernetes</strong></td><td>Industriestandard: Auto-Scaling, Self-Healing, Rolling Updates. Laut CNCF nutzen 82% der Container-User K8s in Produktion (2025)</td><td>Produktion, grosse verteilte Systeme mit vielen Nodes</td></tr>
+          <tr><td><strong>Docker Swarm</strong></td><td>Dockers eigene Cluster-Lösung mit nativer Docker-CLI Integration</td><td>Kleine Cluster. Seit Docker Engine v29 gibt es Breaking Changes — Ökosystem schrumpft</td></tr>
+        </table></div>
+        <p class="sources">Quellen: <a href="https://www.portainer.io/blog/docker-swarm-vs-kubernetes">portainer.io – Docker Swarm vs Kubernetes 2026</a>, <a href="https://www.qovery.com/blog/kubernetes-vs-docker-what-are-the-differences">qovery.com</a></p>
       </div>
+
+      <!-- C2E -->
       <div class="content-block reveal">
         <h3><span class="tag">C2E</span> Public vs. Private Registry</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann die Unterschiede zwischen Public
-          und Private Registries anhand von mindestens 4 Kriterien erklären.
-        </div>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th></th>
-              <th>Public</th>
-              <th>Private</th>
-            </tr>
-            <tr>
-              <td>Zugriff</td>
-              <td>Jeder kann pullen</td>
-              <td>Nur autorisierte Nutzer</td>
-            </tr>
-            <tr>
-              <td>Kosten</td>
-              <td>Meistens gratis</td>
-              <td>Kostenpflichtig / self-hosted</td>
-            </tr>
-            <tr>
-              <td>Sicherheit</td>
-              <td>Öffentlich sichtbar</td>
-              <td>Geschützt</td>
-            </tr>
-            <tr>
-              <td>Beispiele</td>
-              <td>Docker Hub, GHCR</td>
-              <td>ECR, ACR, Harbor</td>
-            </tr>
-            <tr>
-              <td>Use Case</td>
-              <td>Open-Source, Tutorials</td>
-              <td>Firmen-Software</td>
-            </tr>
-          </table>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann die Unterschiede zwischen Public und Private Registries anhand von mindestens 4 Kriterien erklären.</div>
+        <div class="table-wrap"><table>
+          <tr><th></th><th>Public Registry</th><th>Private Registry</th></tr>
+          <tr><td>Zugriff</td><td>Jeder kann Images pullen ohne Login</td><td>Nur Nutzer mit expliziter Berechtigung</td></tr>
+          <tr><td>Kosten</td><td>Meistens gratis (Docker Hub: 1 privates Repo gratis)</td><td>Kostenpflichtig oder self-hosted (z.B. Harbor auf eigenem Server)</td></tr>
+          <tr><td>Sicherheit</td><td>Images und alle Layers sind öffentlich einsehbar</td><td>Code, Configs und Images sind geschützt</td></tr>
+          <tr><td>Wann benutzen?</td><td>Open-Source Projekte, Base-Images, Tutorials</td><td>Firmen-interne Software mit proprietärem Code</td></tr>
+          <tr><td>Beispiele</td><td>Docker Hub (public repos), GHCR (public packages)</td><td>AWS ECR, Azure ACR, self-hosted Harbor</td></tr>
+        </table></div>
+        <h4>Unser Projekt:</h4>
+        <div class="pro-con">
+          <div class="pro"><h5>Docker Hub (Public)</h5><p>Wir haben unsere DevBoard Images auf Docker Hub als public gepusht — das ist für ein Schulprojekt ok und ermöglicht es dem Lehrer die Images direkt zu pullen.</p></div>
+          <div class="con"><h5>GHCR (Private)</h5><p>Auf GHCR sind die Images private by default — das wäre für echte Firmenprojekte der richtige Ansatz, weil der Code nicht öffentlich sichtbar sein soll.</p></div>
         </div>
       </div>
     </section>
+
     <div class="divider"></div>
-    <div class="phase-sep" id="phase3">
-      <div class="num">03</div>
-      <h2 class="reveal">Phase 3: <span>Build, Run &amp; Publish</span></h2>
-    </div>
+    <div class="phase-sep" id="phase3"><div class="num">03</div><h2 class="reveal">Phase 3: <span>Build, Run &amp; Publish</span></h2></div>
+
     <section class="section">
+      <!-- D1E -->
       <div class="content-block reveal">
-        <h3>
-          <span class="tag">D1E</span> Container-Konfiguration + Fehlersuche
-        </h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann eine umfangreiche
-          docker-compose.yml mit mindestens 3 Services, Netzwerken, Volumes und
-          Health-Checks erstellen und mindestens 2 Fehlerquellen selbständig
-          beheben.
-        </div>
-        <p>
-          Jetzt wird's praktisch. Wir haben die ganze App von Grund auf gebaut:
-          3 Container, 2 Netzwerke, 1 Volume. Hier ist alles was wir gemacht
-          haben:
-        </p>
+        <h3><span class="tag">D1E</span> Container-Konfiguration + Fehlersuche</h3>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann eine umfangreiche docker-compose.yml mit mindestens 3 Services, Netzwerken, Volumes und Health-Checks erstellen und mindestens 2 Fehlerquellen selbständig beheben.</div>
+        <p>Jetzt wird's praktisch. Wir haben die ganze App von Grund auf gebaut: 3 Container, 2 Netzwerke, 1 Volume.</p>
+
         <h4>Projektstruktur</h4>
-        <p>So sieht unser Projekt in VS Code aus:</p>
+        <p>So sieht unser Projekt in VS Code aus — alle Dateien die wir erstellt haben:</p>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1qjCvbbtgW-OXl-4_-N_nVETkD0lqXl8k/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">DevBoard Projektstruktur in VS Code</div>
+          <iframe src="https://drive.google.com/file/d/1qjCvbbtgW-OXl-4_-N_nVETkD0lqXl8k/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">VS Code Explorer zeigt die Ordnerstruktur: backend/ mit app.py, Dockerfile und requirements.txt; frontend/ mit Dockerfile, index.html und nginx.conf; dazu .env und docker-compose.yml im Root</span></div>
         </div>
+
         <h4>Backend: Flask API</h4>
-        <p>
-          Das Backend ist eine Python Flask REST API. Die hat Endpoints um Tasks
-          zu erstellen (POST), anzuzeigen (GET) und zu löschen (DELETE).
-          Ausserdem gibt's einen Health-Check Endpoint den Docker benutzt um zu
-          prüfen ob der Container noch lebt.
-        </p>
+        <p>Das Backend ist eine Python Flask REST API mit Endpoints für Tasks (GET, POST, DELETE) und einem <code>/api/health</code> Endpoint den Docker für den Health-Check benutzt. Die DB-Verbindung liest Credentials aus Environment Variables und hat einen Retry-Mechanismus falls die DB noch nicht ready ist.</p>
         <details>
           <summary>backend/app.py anzeigen</summary>
-          <pre>
-from flask import Flask, request, jsonify
+          <pre>from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2, os, time
 
@@ -1226,18 +470,14 @@ def health():
         cur.execute("SELECT 1"); cur.close(); conn.close()
         return jsonify({"status": "healthy"})
     except Exception as e:
-        return jsonify({"status": "unhealthy", "error": str(e)}), 500</pre
-          >
+        return jsonify({"status": "unhealthy", "error": str(e)}), 500</pre>
         </details>
+
         <h4>Backend: Dockerfile</h4>
-        <p>
-          Basiert auf <code>python:3.12-slim</code>, läuft als nicht-Root-User
-          (<code>appuser</code>) und benutzt Gunicorn als Production-Server.
-        </p>
+        <p>Basiert auf <code>python:3.12-slim</code> (kleines Image ohne unnötige Pakete), läuft als nicht-Root-User (<code>appuser</code> => Sicherheit) und benutzt Gunicorn statt dem Flask Dev-Server für Production.</p>
         <details>
           <summary>backend/Dockerfile anzeigen</summary>
-          <pre>
-FROM python:3.12-slim
+          <pre>FROM python:3.12-slim
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -1245,18 +485,14 @@ COPY app.py .
 RUN useradd -r appuser
 USER appuser
 EXPOSE 5000
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:app"]</pre
-          >
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:app"]</pre>
         </details>
+
         <h4>Frontend: Nginx als Reverse Proxy</h4>
-        <p>
-          Nginx liefert die statischen Files aus und leitet
-          <code>/api/</code> Requests an Flask weiter.
-        </p>
+        <p>Nginx liefert die statischen HTML/JS Files aus und leitet alle <code>/api/</code> Requests intern an den Flask-Container weiter. Der Browser merkt das nicht — für ihn läuft alles auf Port 8080.</p>
         <details>
           <summary>frontend/nginx.conf anzeigen</summary>
-          <pre>
-server {
+          <pre>server {
     listen 80;
     server_name localhost;
     location / {
@@ -1268,21 +504,17 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
-}</pre
-          >
+}</pre>
         </details>
+
         <h4>Environment Variables</h4>
-        <p>Secrets liegen in einer <code>.env</code> Datei, nicht im Code:</p>
+        <p>Secrets (DB-Name, User, Passwort) liegen in einer <code>.env</code> Datei, die <strong>nicht</strong> ins Git committed wird. Die <code>docker-compose.yml</code> liest diese Variablen automatisch ein.</p>
+
         <h4>Docker Compose</h4>
-        <p>
-          Das Herzstück ist die <code>docker-compose.yml</code>, die alles
-          zusammenbringt: 3 Services, 2 Netzwerke, 1 Volume, Health-Checks, Resource
-          Limits und Restart Policies.
-        </p>
+        <p>Das Herzstück ist die <code>docker-compose.yml</code> — sie bringt alles zusammen: 3 Services, 2 Netzwerke, 1 Volume, Health-Checks, Resource Limits und Restart Policies.</p>
         <details>
           <summary>docker-compose.yml anzeigen</summary>
-          <pre>
-services:
+          <pre>services:
   frontend:
     build: ./frontend
     container_name: devboard-frontend
@@ -1339,365 +571,217 @@ networks:
   backend-network: { driver: bridge, internal: true }
 
 volumes:
-  pgdata:</pre
-          >
+  pgdata:</pre>
         </details>
+
         <h4>App starten</h4>
-        <p>
-          Mit <code>docker compose up --build -d</code> wird alles gebaut und
-          gestartet:
-        </p>
+        <p>Mit <code>docker compose up --build -d</code> werden alle Images gebaut und die Container gestartet. Der <code>--build</code> Flag sorgt dafür dass die eigenen Images neu gebaut werden, <code>-d</code> startet alles im Hintergrund:</p>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1IfE1gs-mQKqigVlW9pKlEIexito66qs_/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">docker compose up --build -d</div>
+          <iframe src="https://drive.google.com/file/d/1IfE1gs-mQKqigVlW9pKlEIexito66qs_/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Terminal zeigt den Build-Prozess: postgres:16-alpine wird von Docker Hub gepullt, devboard-frontend und devboard-backend werden aus den Dockerfiles gebaut (je ~12 Sekunden). Beide Docker-Netzwerke und das pgdata Volume werden neu erstellt.</span></div>
         </div>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1iOK71JWkVzY4vS6qVjwpFpSqRQtVOXaW/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">Alle 3 Container laufen</div>
+          <iframe src="https://drive.google.com/file/d/1iOK71JWkVzY4vS6qVjwpFpSqRQtVOXaW/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Alle 3 Container sind hochgefahren: devboard-db und devboard-backend zeigen "Healthy" (Health-Check erfolgreich), devboard-frontend zeigt "Started". Der Startup dauert ~11 Sekunden weil das Backend wartet bis die DB bereit ist.</span></div>
         </div>
+
         <h4>App testen</h4>
-        <p>
-          Die App läuft unter <code>http://localhost:8080</code>. Wir haben
-          Tasks erstellt und den Health-Check getestet:
-        </p>
+        <p>Die App läuft unter <code>http://localhost:8080</code>. Wir haben einen Task erstellt und den Health-Check direkt aufgerufen:</p>
         <div class="screenshot">
-          <iframe
-            src="https://drive.google.com/file/d/1sCyln5AQ_tXS3HEkQY614BFDlf6tuAmT/preview"
-            width="640"
-            height="480"></iframe>
-          <div class="caption">DevBoard im Browser: Task erfolgreich erstellt</div>
+          <iframe src="https://drive.google.com/file/d/1sCyln5AQ_tXS3HEkQY614BFDlf6tuAmT/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">DevBoard läuft im Browser. Das Eingabefeld "Neuer Task..." ist sichtbar, ein Task namens "hello" wurde erfolgreich erstellt und wird mit Timestamp (13.4.2026, 15:00:55) angezeigt. Der rote "Löschen" Button ist ebenfalls sichtbar.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/16xY4tfEM2qcrV_BocXSLoAA3ubXPJrFs/preview" width="640" height="480"></iframe>
-          <div class="caption">Health-Check gibt zurück: {"status": "healthy"}</div>
+          <div class="caption"><span class="caption-text">PowerShell Invoke-WebRequest auf den Health-Check Endpoint http://localhost:8080/api/health. StatusCode 200, Content: {"status":"healthy"} — der Health-Check bestätigt dass Flask läuft und die Datenbankverbindung funktioniert.</span></div>
         </div>
+
         <h4>Persistenz testen</h4>
-        <p>
-          Die App wurde komplett gestoppt und neu gestartet. Die Tasks waren
-          dank des pgdata-Volumes noch vorhanden:
-        </p>
+        <p>Wir haben die komplette App gestoppt (<code>docker compose down</code>) und wieder gestartet. Die Tasks waren dank dem pgdata Volume noch da:</p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1Fd0JNriQEW3gERIxyEu51aCk6PY882Mq/preview" width="640" height="480"></iframe>
           <iframe src="https://drive.google.com/file/d/1HglRYN_fUnfWpTKJYgdLACWxdHFR1LmE/preview" width="640" height="480"></iframe>
           <iframe src="https://drive.google.com/file/d/15-xB3zEOAS60SN_m4BUnzpyu0nV7Kv4Q/preview" width="640" height="480"></iframe>
-          <div class="caption">docker compose down => up => Daten noch da</div>
+          <div class="caption"><span class="caption-text">Persistenz-Test in 3 Schritten: (1) docker compose down entfernt alle 5 Container und Netzwerke, das pgdata Volume bleibt erhalten. (2) docker compose up startet alles neu — alle 6 Ressourcen werden neu erstellt. (3) Alle 3 Container sind wieder healthy.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1UknkRk83-j46svvoJiQwBM6DEsqoYHV0/preview" width="640" height="480"></iframe>
-          <div class="caption">Tasks nach Neustart noch vorhanden</div>
+          <div class="caption"><span class="caption-text">Browser nach dem Neustart: beide Tasks ("hello js" vom 14.4.2026 und "hello" vom 13.4.2026) sind noch vorhanden. Das beweist dass das pgdata Volume die Daten über einen Container-Neustart hinaus persistiert hat.</span></div>
         </div>
+
         <h4>Fehlersuche</h4>
-        <p>
-          Um zu zeigen dass wir Fehler selbständig fixen können, haben wir
-          absichtlich 2 Fehler eingebaut:
-        </p>
-        <p>
-          <strong>Fehler 1: Falscher Port im Nginx Proxy</strong><br />Port in
-          <code>nginx.conf</code> von 5000 auf 3000 geändert, wodurch Nginx
-          die API-Requests nicht mehr weiterleiten konnte und ein 502 Bad Gateway auftrat:
-        </p>
+        <p>Um zu zeigen dass wir Fehler selbständig fixen können, haben wir absichtlich 2 Fehler eingebaut:</p>
+        <p><strong>Fehler 1: Falscher Port im Nginx Proxy</strong><br />Port in <code>nginx.conf</code> von 5000 auf 3000 geändert — Nginx konnte die <code>/api/</code> Requests nicht mehr an Flask weiterleiten:</p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1fTOJCFZfDBpeAFTW5GDTpfmR6ssKB2cH/preview" width="640" height="480"></iframe>
-          <div class="caption">502 Bad Gateway durch falschen Proxy-Port</div>
+          <div class="caption"><span class="caption-text">Browser Developer Tools zeigen: GET http://localhost:8080/api/tasks schlägt mit 502 Bad Gateway fehl. "Bad Gateway" bedeutet Nginx hat den Request erhalten aber konnte ihn nicht an das Backend weiterleiten — weil Port 3000 falsch ist und dort nichts läuft.</span></div>
         </div>
-        <p>
-          <strong>Fix:</strong> Port auf 5000 zurückgesetzt und Container neu gebaut,
-          danach lief die App wieder.
-        </p>
-        <p>
-          <strong>Fehler 2: Falsches DB-Passwort</strong><br />Passwort in
-          <code>.env</code> geändert, aber PostgreSQL hatte das alte noch im
-          Volume gespeichert, was zu einem Mismatch führte:
-        </p>
+        <p><strong>Fix:</strong> Port in nginx.conf zurück auf 5000 gesetzt, Container mit <code>docker compose up --build -d</code> neu gebaut => alles funktioniert wieder.</p>
+
+        <p><strong>Fehler 2: Falsches DB-Passwort</strong><br />Passwort in <code>.env</code> geändert — PostgreSQL hatte das alte noch im Volume gespeichert, Mismatch beim Verbindungsaufbau:</p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1SXsoZBDMXJk4IQW1TOf1IneW9bxpNUN4/preview" width="640" height="480"></iframe>
-          <div class="caption">
-            Backend abgestürzt: dependency failed to start
-          </div>
+          <div class="caption"><span class="caption-text">Terminal zeigt: devboard-db ist "Healthy" (DB läuft normal), aber devboard-backend hat einen roten X "Error dependency backend failed to start". Die Fehlermeldung "dependency failed to start: container devboard-backend is unhealthy" erscheint weil der Health-Check schlägt fehl — Flask kann sich nicht mit der DB verbinden.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1OQQeZZjq04Icow800drSKxFi3SL_cUP6/preview" width="640" height="480"></iframe>
-          <div class="caption">500 Internal Server Errors</div>
+          <div class="caption"><span class="caption-text">Browser Developer Tools zeigen eine Flut von 500 Internal Server Errors auf /api/tasks und "Unexpected token '&lt;'" Fehler — das Backend gibt HTML-Fehlerseiten zurück statt JSON, weil es keine DB-Verbindung aufbauen kann.</span></div>
         </div>
-        <p>
-          <strong>Fix:</strong> Passwort zurücksetzen, Volume löschen (<code
-            >docker compose down -v</code
-          >), neu starten.
-        </p>
+        <p><strong>Fix:</strong> Passwort in .env zurückgesetzt, <code>docker compose down -v</code> (Volume löschen damit die DB mit dem neuen Passwort initialisiert wird), <code>docker compose up -d</code> => alles läuft wieder.</p>
       </div>
+
+      <!-- D2G -->
       <div class="content-block reveal">
         <h3><span class="tag">D2G</span> Image-Lifecycle</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann Container-Images aus Docker Hub
-          beziehen, starten, stoppen und löschen und jeden Schritt
-          dokumentieren.
-        </div>
-        <p>
-          Wir haben den kompletten Lifecycle durchgespielt: Images pullen, Container
-          starten, stoppen und wieder starten:
-        </p>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann Container-Images aus Docker Hub beziehen, starten, stoppen und löschen und jeden Schritt dokumentieren.</div>
+        <p>Wir haben den kompletten Lifecycle durchgespielt — Images pullen, Container stoppen, wieder starten und lokale Images auflisten:</p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/14IngRgHnNCW4jRfmN73XQZcLKY0Wqlxo/preview" width="640" height="480"></iframe>
-          <div class="caption">Image-Management: pull, stop, start, ps</div>
+          <div class="caption"><span class="caption-text">Terminal zeigt alle Lifecycle-Befehle: docker compose stop frontend (Container devboard-frontend Stopped), docker compose ps (zeigt nur noch backend und db), docker compose start frontend (Container devboard-frontend Started, devboard-backend und devboard-db Healthy). Ausserdem: grep funktioniert in PowerShell nicht — wir haben docker images direkt verwendet.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1osr4PHcBMhpM3lk0Mc0BsIn2iQ4Vf8DH/preview" width="640" height="480"></iframe>
-          <div class="caption">docker images zeigt die lokalen DevBoard-Images</div>
+          <div class="caption"><span class="caption-text">docker images zeigt alle lokalen Images: adminer:latest (250MB), amadelaela/devboard-backend:latest und :v1.0 (beide 141MB, gleiche Image-ID = gleicher Layer), amadelaela/devboard-frontend:latest und :v1.0 (beide 48.3MB). Die gleiche ID beweist dass Tagging nur einen Alias erstellt, nicht eine Kopie.</span></div>
         </div>
       </div>
+
+      <!-- D2F -->
       <div class="content-block reveal">
         <h3><span class="tag">D2F</span> Images auf Docker Hub pushen</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann ein selbst erstelltes Docker-Image
-          taggen, auf Docker Hub publizieren und dokumentieren.
-        </div>
-        <p>
-          Unsere Images auf Docker Hub gepusht mit den Befehlen:
-          <code>docker login</code>, <code>docker tag</code> und <code>docker push</code>.
-        </p>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann ein selbst erstelltes Docker-Image taggen, auf Docker Hub publizieren und dokumentieren.</div>
+        <p>Unsere selbst erstellten Images auf Docker Hub gepusht mit <code>docker login</code>, <code>docker tag</code> und <code>docker push</code>:</p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1YiYI8zep0ib1OGlWcWajPmT5vEDbc-XV/preview" width="640" height="480"></iframe>
-          <div class="caption">Login</div>
+          <div class="caption"><span class="caption-text">docker login — Eingabe von Username und Passwort. Terminal bestätigt "Login Succeeded" — die Authentifizierung bei Docker Hub war erfolgreich und wir können jetzt Images pushen.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/10HZ_zuGmtWwLJ4v4eTvSv-lN1yOwuhL_/preview" width="640" height="480"></iframe>
-          <div class="caption">Tag</div>
+          <div class="caption"><span class="caption-text">docker tag und docker push im Terminal: die einzelnen Layers des Backend-Images werden nacheinander als "Pushed" bestätigt. Am Ende erscheint der sha256-Digest des Images als Beweis für den erfolgreichen Upload.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1r0j5X67TyARK89pAXgBvXSJ5aPz40qT4/preview" width="640" height="480"></iframe>
-          <div class="caption">Docker Hub</div>
+          <div class="caption"><span class="caption-text">Docker Hub Webseite (hub.docker.com) zeigt das amadelaela/devboard-backend Repository mit den Tags v1.0 und latest, dem sha256-Digest und "Updated 1 minute ago". Das bestätigt dass der Push erfolgreich war und das Image public verfügbar ist.</span></div>
         </div>
       </div>
+
+      <!-- D2E -->
       <div class="content-block reveal">
         <h3><span class="tag">D2E</span> Images auf mehrere Registries</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann dasselbe Image auf Docker Hub und
-          GitHub Container Registry publizieren und die Unterschiede
-          dokumentieren.
-        </div>
-        <p>
-          Gleiche Images auch auf GHCR gepusht. Braucht einen GitHub Personal
-          Access Token:
-        </p>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann dasselbe Image auf Docker Hub und GitHub Container Registry publizieren und die Unterschiede dokumentieren.</div>
+        <p>Gleiche Images auch auf GHCR gepusht. Dafür braucht man einen GitHub Personal Access Token (PAT) mit read:packages und write:packages Scopes:</p>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1cwggOLFxcyzQQ7dTVgczRFu2RRqfV1c3/preview" width="640" height="480"></iframe>
-          <div class="caption">Github Login</div>
+          <div class="caption"><span class="caption-text">docker login ghcr.io mit dem GitHub Token als Passwort (per --password-stdin für Sicherheit). Terminal bestätigt "Login Succeeded" für ghcr.io — GHCR erkennt den Token und gibt Zugriff.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1aV09agY_wgHOEg3EY8_Ucf0JmwibZeqp/preview" width="640" height="480"></iframe>
-          <div class="caption">für Github taggen</div>
+          <div class="caption"><span class="caption-text">docker tag erstellt neue Tags mit ghcr.io-Prefix: ghcr.io/matteo-italiano/devboard-backend:v1.0 und ghcr.io/matteo-italiano/devboard-frontend:v1.0. Gleicher Befehl wie bei Docker Hub, nur anderes Registry-Prefix.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/18noad6rrR9l-agqNOdIl4UB6b2GkRqf5/preview" width="640" height="480"></iframe>
-          <div class="caption">auf Github pushen</div>
+          <div class="caption"><span class="caption-text">docker push zu GHCR: die einzelnen Layers werden zu ghcr.io/matteo-italiano/devboard-backend und devboard-frontend gepusht. Der abschliessende sha256-Digest bestätigt den erfolgreichen Upload beider Images.</span></div>
         </div>
         <div class="screenshot">
           <iframe src="https://drive.google.com/file/d/1q5c7llo3jVkPLGtbdNHn1LX3_2v9hIDQ/preview" width="640" height="480"></iframe>
-          <div class="caption">devboard-frontend & backend auf GitHub Packages</div>
+          <div class="caption"><span class="caption-text">GitHub Packages Seite (github.com/matteo-italiano?tab=packages) zeigt 5 publizierte Packages: counter-backend, html-openshift-app, counter-frontend (ältere Projekte) sowie das neue devboard-backend und devboard-frontend — beide gerade eben publiziert. Private-Badge bestätigt dass GHCR Images standardmässig privat sind.</span></div>
         </div>
+
         <h4>Docker Hub vs. GHCR</h4>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th></th>
-              <th>Docker Hub</th>
-              <th>GHCR</th>
-            </tr>
-            <tr>
-              <td>Standard</td>
-              <td>Default-Registry</td>
-              <td>In GitHub integriert</td>
-            </tr>
-            <tr>
-              <td>Sichtbarkeit</td>
-              <td>Public by default</td>
-              <td>Private by default</td>
-            </tr>
-            <tr>
-              <td>CI/CD</td>
-              <td>Eigene Integration</td>
-              <td>Direkt mit GitHub Actions</td>
-            </tr>
-            <tr>
-              <td>Auth</td>
-              <td>Docker Hub Account</td>
-              <td>GitHub Token (PAT)</td>
-            </tr>
-            <tr>
-              <td>Format</td>
-              <td><code>user/image:tag</code></td>
-              <td><code>ghcr.io/user/image:tag</code></td>
-            </tr>
-          </table>
-        </div>
+        <div class="table-wrap"><table>
+          <tr><th></th><th>Docker Hub</th><th>GHCR</th></tr>
+          <tr><td>Standard</td><td>Default-Registry für Docker</td><td>In GitHub integriert</td></tr>
+          <tr><td>Sichtbarkeit</td><td>Public by default</td><td>Private by default</td></tr>
+          <tr><td>CI/CD</td><td>Eigene Integration nötig</td><td>Direkt mit GitHub Actions, kein extra Setup</td></tr>
+          <tr><td>Auth</td><td>Docker Hub Account + Passwort</td><td>GitHub Token (PAT) mit Scopes</td></tr>
+          <tr><td>Format</td><td><code>user/image:tag</code></td><td><code>ghcr.io/user/image:tag</code></td></tr>
+        </table></div>
       </div>
     </section>
+
     <div class="divider"></div>
-    <div class="phase-sep" id="phase4">
-      <div class="num">04</div>
-      <h2 class="reveal">Phase 4: <span>Sicherheit</span></h2>
-    </div>
+    <div class="phase-sep" id="phase4"><div class="num">04</div><h2 class="reveal">Phase 4: <span>Sicherheit</span></h2></div>
+
     <section class="section">
+      <!-- F1G -->
       <div class="content-block reveal">
         <h3><span class="tag">F1G</span> Qualitätssicherung</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann mindestens 4 Methoden zur
-          Qualitätssicherung von Container-Images aufzählen und erklären.
-        </div>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Methode</th>
-              <th>Was macht das?</th>
-              <th>Tools</th>
-            </tr>
-            <tr>
-              <td><strong>Image Scanning</strong></td>
-              <td>Sucht nach bekannten CVEs in Paketen</td>
-              <td>Trivy, Snyk, Grype</td>
-            </tr>
-            <tr>
-              <td><strong>Dockerfile Linting</strong></td>
-              <td>Prüft Best Practices im Dockerfile</td>
-              <td>Hadolint, Dockle</td>
-            </tr>
-            <tr>
-              <td><strong>Image Signing</strong></td>
-              <td>Kryptographische Signatur gegen Manipulation</td>
-              <td>Content Trust, Cosign</td>
-            </tr>
-            <tr>
-              <td><strong>Runtime Testing</strong></td>
-              <td>Prüft laufende Container-Konfiguration</td>
-              <td>Docker Bench, Falco</td>
-            </tr>
-          </table>
-        </div>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 4 Methoden zur Qualitätssicherung von Container-Images aufzählen und erklären.</div>
+        <div class="table-wrap"><table>
+          <tr><th>Methode</th><th>Was macht das?</th><th>Tools</th></tr>
+          <tr><td><strong>Image Scanning</strong></td><td>Durchsucht das Image und alle installierten Pakete nach bekannten Sicherheitslücken (CVEs) in einer Datenbank</td><td>Trivy, Snyk, Grype</td></tr>
+          <tr><td><strong>Dockerfile Linting</strong></td><td>Analysiert das Dockerfile statisch auf Best-Practice-Verstösse (z.B. Root-User, fehlendes COPY statt ADD, ungepinnte Versionen)</td><td>Hadolint, Dockle</td></tr>
+          <tr><td><strong>Image Signing</strong></td><td>Erstellt eine kryptographische Signatur für das Image — man kann damit beweisen dass das Image nicht manipuliert wurde nach dem Build</td><td>Docker Content Trust, Cosign</td></tr>
+          <tr><td><strong>Runtime Testing</strong></td><td>Prüft die laufenden Container gegen Security-Benchmarks: offene Ports, Root-Prozesse, Netzwerk-Policies, Read-Only Filesystems</td><td>Docker Bench for Security, Falco</td></tr>
+        </table></div>
       </div>
+
+      <!-- F1F -->
       <div class="content-block reveal">
         <h3><span class="tag">F1F</span> Sicherheitsindikatoren</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann Sicherheitsindikatoren beschreiben
-          und deren Relevanz für den Containerbetrieb erklären.
-        </div>
-        <div class="table-wrap">
-          <table>
-            <tr>
-              <th>Indikator</th>
-              <th>Was heisst das?</th>
-              <th>Bei uns</th>
-            </tr>
-            <tr>
-              <td><strong>CVE-Score</strong></td>
-              <td>0 bis 10. Ab 7 = High, ab 9 = Critical</td>
-              <td>Trivy zeigt Scores an; kritische Schwachstellen werden sofort behoben</td>
-            </tr>
-            <tr>
-              <td><strong>Base-Image-Alter</strong></td>
-              <td>Älter = mehr Lücken</td>
-              <td>python:3.12-slim + nginx:alpine = minimal</td>
-            </tr>
-            <tr>
-              <td><strong>Offene Ports</strong></td>
-              <td>Jeder Port = Angriffsvektor</td>
-              <td>Nur 8080 extern, PostgreSQL intern</td>
-            </tr>
-            <tr>
-              <td><strong>Root-User</strong></td>
-              <td>Root kann Host übernehmen</td>
-              <td>Backend läuft als <code>appuser</code></td>
-            </tr>
-          </table>
-        </div>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann Sicherheitsindikatoren beschreiben und deren Relevanz für den Containerbetrieb erklären.</div>
+        <div class="table-wrap"><table>
+          <tr><th>Indikator</th><th>Was heisst das?</th><th>Bei uns</th></tr>
+          <tr><td><strong>CVE-Score (CVSS)</strong></td><td>Skala 0–10. Low (0–3.9), Medium (4–6.9), High (7–8.9), Critical (9–10). Bewertet Schwere einer bekannten Schwachstelle nach Angriffsmöglichkeit, Komplexität und Impact</td><td>Trivy zeigt CVE-Scores — Critical und High müssen sofort behoben werden, Medium/Low nach Möglichkeit</td></tr>
+          <tr><td><strong>Base-Image-Alter</strong></td><td>Ältere Images enthalten mehr ungepatchte Pakete. <code>:slim</code> und <code>:alpine</code> Varianten haben deutlich weniger Pakete als Full-Images</td><td>Wir nutzen python:3.12-slim (statt python:3.12) und nginx:alpine — minimale Angriffsfläche</td></tr>
+          <tr><td><strong>Offene Ports</strong></td><td>Jeder nach aussen exponierte Port ist ein möglicher Angriffsvektor — nur wirklich benötigte Ports sollten offen sein</td><td>Nur Port 8080 nach aussen offen. PostgreSQL Port 5432 ist ausschliesslich intern erreichbar</td></tr>
+          <tr><td><strong>Root-User</strong></td><td>Container die als Root laufen können bei einem Container-Ausbruch das gesamte Host-System kompromittieren</td><td>Backend läuft als <code>appuser</code> (nicht-Root) — definiert mit <code>USER appuser</code> im Dockerfile</td></tr>
+        </table></div>
       </div>
+
+      <!-- F1E -->
       <div class="content-block reveal">
         <h3><span class="tag">F1E</span> Sicherheitsscan mit Trivy</h3>
-        <div class="lernziel">
-          <span>SMART-Lernziel</span>Ich kann mit Trivy einen Sicherheitsscan
-          durchführen, Schwachstellen analysieren und mindestens 2 davon
-          beheben.
-        </div>
+        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann mit Trivy einen Sicherheitsscan durchführen, Schwachstellen analysieren und mindestens 2 davon beheben.</div>
+
         <h4>Scan durchführen</h4>
-        <p>Trivy als Docker-Container benutzt um unsere Images zu scannen:</p>
+        <p>Trivy als Docker-Container benutzt um unsere Images zu scannen — kein lokales Installieren nötig:</p>
         <details>
           <summary>Trivy Befehle anzeigen</summary>
-          <pre>
-docker run --rm aquasec/trivy image amadelaela/devboard-backend:v1.0
+          <pre>docker run --rm aquasec/trivy image amadelaela/devboard-backend:v1.0
 docker run --rm aquasec/trivy image amadelaela/devboard-frontend:v1.0
-docker run --rm aquasec/trivy image --severity HIGH,CRITICAL amadelaela/devboard-backend:v1.0</pre
-          >
+docker run --rm aquasec/trivy image --severity HIGH,CRITICAL amadelaela/devboard-backend:v1.0</pre>
         </details>
-          <div class="screenshot">
-            <iframe src="https://drive.google.com/file/d/1Hko2TW0WoSJxcIj7g0angJB8_dAdLxqf/preview" width="640" height="480"></iframe>
-          <div class="caption">Schwachstellen die gefunden worden sind (Python) + Lösung</div>
+        <div class="screenshot">
+          <iframe src="https://drive.google.com/file/d/1Hko2TW0WoSJxcIj7g0angJB8_dAdLxqf/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Trivy-Scan Ergebnis für das Backend-Image: die Tabelle zeigt gefundene CVEs mit CVE-ID, Severity (z.B. HIGH, CRITICAL), betroffenes Paket, installierte Version und die verfügbare Fixed Version. Ausserdem ist die Lösung sichtbar: Packages auf neuere Versionen updaten.</span></div>
         </div>
+
         <h4>Schwachstellen beheben</h4>
-        <p>
-        <strong>1. </strong> <i>requirements.txt auf die neuen Versionen bringen</i><br />
-        <strong>2. </strong> <i>docker neu composen</i>
-        </p>
-        <p>Nach dem Rebuild zeigt Trivy deutlich weniger Schwachstellen.</p>
-          <div class="screenshot">
-            <iframe src="https://drive.google.com/file/d/1spHhE4SPF2m7He0ishGglbf3uNASeEHt/preview" width="640" height="480"></iframe>
-          <div class="caption">Die alten Schwachstellen von Python sind weg somit haben wir sogar 3 behohoben</div>
+        <p>Wir haben 2 Fixes durchgeführt um die Schwachstellen zu reduzieren:</p>
+        <p><strong>Fix 1 — requirements.txt updaten:</strong> Die gefundenen Python-Pakete (Flask, psycopg2, gunicorn) auf die neuesten Versionen bringen die die CVEs gefixt haben. Einfach Versionsnummern in requirements.txt anpassen.</p>
+        <p><strong>Fix 2 — docker compose neu builden:</strong> <code>docker compose up --build -d</code> => neues Image ohne die alten Packages.</p>
+        <p>Nach dem Rebuild zeigt Trivy deutlich weniger Schwachstellen:</p>
+        <div class="screenshot">
+          <iframe src="https://drive.google.com/file/d/1spHhE4SPF2m7He0ishGglbf3uNASeEHt/preview" width="640" height="480"></iframe>
+          <div class="caption"><span class="caption-text">Trivy-Scan nach dem Fix: die Schwachstellen in den Python-Paketen (Flask, psycopg2, gunicorn) sind weg. Statt X gefundenen CVEs zeigt Trivy jetzt "0 vulnerabilities" für die aktualisierten Packages — wir haben sogar 3 CVEs auf einmal behoben durch das Package-Update.</span></div>
+        </div>
       </div>
     </section>
+
     <div class="divider"></div>
     <section class="section" id="reflexion">
       <div class="section-header reveal"><h2>Reflexion</h2></div>
       <div class="content-block reveal">
         <h4>Was haben wir gelernt?</h4>
-        <p>
-          Wir haben eine komplette containerisierte Webapp von Null aufgebaut.
-          Dabei haben wir nicht nur Docker und Compose besser verstanden,
-          sondern auch gelernt wie wichtig saubere Architektur mit getrennten
-          Netzwerken, Health-Checks und Resource Limits ist.
-        </p>
-        <p>
-          Am meisten gelernt haben wir bei der Fehlersuche: wenn man absichtlich
-          etwas kaputt macht und dann mit Docker-Logs herausfinden muss was schief
-          gelaufen ist, versteht man plötzlich wie alles zusammenhängt.
-        </p>
-        <p>
-          Der Cloud-Vergleich war auch spannend. Jetzt verstehen wir warum K8s
-          für grosse Systeme Sinn macht, aber Compose für Entwicklung die
-          bessere Wahl ist.
-        </p>
-        <p>
-          Trivy war ein Augenöffner: sogar ein frisches Image hat schon
-          Schwachstellen. Regelmässig scannen ist Pflicht.
-        </p>
+        <p>Wir haben eine komplette containerisierte Webapp von Null aufgebaut. Dabei haben wir nicht nur Docker und Compose besser verstanden, sondern auch gelernt wie wichtig saubere Architektur mit getrennten Netzwerken, Health-Checks und Resource Limits ist.</p>
+        <p>Am meisten gelernt haben wir bei der Fehlersuche: wenn man absichtlich etwas kaputt macht und dann mit Docker-Logs herausfinden muss was schief gelaufen ist, versteht man plötzlich wie alles zusammenhängt.</p>
+        <p>Der Cloud-Vergleich war auch spannend. Jetzt verstehen wir warum K8s für grosse Systeme Sinn macht, aber Compose für Entwicklung die bessere Wahl ist.</p>
+        <p>Trivy war ein Augenöffner: sogar ein frisches Image hat schon Schwachstellen. Regelmässig scannen ist Pflicht.</p>
         <h4>Was würden wir anders machen?</h4>
-        <p>
-          Mit mehr Zeit hätten wir die App auf Google Cloud Run deployed und
-          eine CI/CD-Pipeline mit GitHub Actions gebaut, um Images bei jedem
-          Push auf main automatisch zu bauen, zu scannen und zu pushen. HTTPS mit Let's
-          Encrypt wäre auch nice gewesen.
-        </p>
+        <p>Mit mehr Zeit hätten wir die App auf Google Cloud Run deployed und eine CI/CD-Pipeline mit GitHub Actions gebaut, um Images bei jedem Push auf main automatisch zu bauen, zu scannen und zu pushen. HTTPS mit Let's Encrypt wäre auch nice gewesen.</p>
       </div>
     </section>
+
     <footer>
       <p>Kaya, Vuk, Pascal, Erë-Blin &amp; Matteo · Modul 347 · BBW · 2026</p>
       <p>Gehostet auf <a href="#">GitHub Pages</a></p>
     </footer>
+
     <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) e.target.classList.add("visible");
-          });
-        },
-        { threshold: 0.1 },
-      );
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     </script>
   </body>
 </html>
