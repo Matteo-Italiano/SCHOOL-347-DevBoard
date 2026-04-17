@@ -151,104 +151,152 @@
     <div class="divider"></div>
     <div class="phase-sep" id="phase1"><div class="num">01</div><h2 class="reveal">Phase 1: <span>Anforderungen &amp; Architektur</span></h2></div>
 
-    <section class="section">
-      <!-- A1F -->
-      <div class="content-block reveal">
-        <h3><span class="tag">A1F</span> Anforderungen erfassen</h3>
-        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann bis Ende des Projekts die funktionalen und nicht-funktionalen Anforderungen für eine containerisierte Webanwendung (DevBoard) in einer Anforderungsliste dokumentieren.</div>
-        <p>Bevor wir irgendwas mit Docker machen, müssen wir zuerst wissen was unsere App überhaupt können soll. Ohne klare Anforderungen wissen wir nicht welche Container wir brauchen und wie die miteinander reden.</p>
-        <p>Wir haben uns für ein einfaches Task-Board entschieden: das DevBoard. Damit kann man Tasks erstellen, anzeigen und löschen.</p>
-        <h4>Funktionale Anforderungen</h4>
-        <p>
-          - Tasks anzeigen: eine Übersicht aller Tasks im Board<br />
-          - Tasks erstellen: neue Aufgaben mit Titel anlegen<br />
-          - Tasks löschen: erledigte Aufgaben entfernen<br />
-          - Persistente Datenhaltung: Tasks bleiben nach Neustart erhalten<br />
-          - REST API: Frontend redet über HTTP mit dem Backend
-        </p>
-        <h4>Nicht-funktionale Anforderungen</h4>
-        <p>
-          - Containerisiert: Jeder Dienst läuft in seinem eigenen Container<br />
-          - Reproduzierbar: <code>docker compose up</code> startet die gesamte App<br />
-          - Isolierte Netzwerke: Die Datenbank ist nicht direkt von aussen erreichbar<br />
-          - Daten-Persistenz: Die DB-Daten liegen auf einem Docker Volume<br />
-          - Portabilität: Die Anwendung läuft auf jedem System mit Docker
-        </p>
-        <p class="sources">Quellen: <a href="https://visuresolutions.com/de/Almf%C3%BChrer/funktionale-vs.-nicht-funktionale-Anforderungen/">visuresolutions.com</a></p>
-        <h4>Technologie-Entscheid</h4>
-        <div class="table-wrap"><table>
-          <tr><th>Komponente</th><th>Technologie</th><th>Warum?</th></tr>
-          <tr><td>Frontend</td><td>Nginx + HTML/JS</td><td>Leichtgewichtig und schnell</td></tr>
-          <tr><td>Backend</td><td>Python Flask</td><td>Einfache REST API, wenig Boilerplate</td></tr>
-          <tr><td>Datenbank</td><td>PostgreSQL</td><td>Robust, Open Source, weit verbreitet</td></tr>
-          <tr><td>Orchestrierung</td><td>Docker Compose</td><td>Perfekt für Multi-Container auf einem Host</td></tr>
-        </table></div>
-      </div>
+    <div class="content-block reveal">
+  <h3><span class="tag">A1F</span> Anforderungen erfassen</h3>
+  <div class="lernziel">
+    <span>SMART-Lernziel</span>
+    Ich kann bis Ende des Projekts (13.4.2026) die funktionalen und
+    nicht-funktionalen Anforderungen für eine containerisierte Webanwendung
+    (DevBoard) vollständig in einer strukturierten Anforderungsliste
+    dokumentieren und dabei für jeden Punkt begründen warum er relevant ist.
+  </div>
 
-      <!-- A1E -->
-      <div class="content-block reveal">
-        <h3><span class="tag">A1E</span> Anforderungen analysieren &amp; verbessern</h3>
-        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann die erfassten Anforderungen kritisch analysieren und mindestens 3 konkrete Verbesserungsvorschläge formulieren und begründen.</div>
-        <p>Nachdem wir die Anforderungen aufgeschrieben haben, haben wir geschaut was man noch besser machen kann. Ohne diese Verbesserungen würde die App zwar laufen, wäre aber weder stabil noch sicher:</p>
-        <div class="table-wrap"><table>
-          <tr><th>Verbesserung</th><th>Problem ohne</th><th>Unsere Lösung</th></tr>
-          <tr><td><strong>Health-Checks</strong></td><td>Docker weiss nicht ob ein Container wirklich funktioniert — er könnte als "running" gelten obwohl die App drin hängt</td><td><code>healthcheck</code> in docker-compose.yml => Docker prüft den Zustand und startet den Container neu wenn er hängt</td></tr>
-          <tr><td><strong>Resource Limits</strong></td><td>Ein Container kann den ganzen RAM fressen und die anderen Container zum Absturz bringen</td><td><code>mem_limit: 256m</code> und <code>cpus: 0.5</code> pro Container setzen</td></tr>
-          <tr><td><strong>Restart Policy</strong></td><td>Container bleibt nach Crash einfach tot => App ist offline bis jemand manuell eingreift</td><td><code>restart: unless-stopped</code> => Docker startet ihn automatisch neu</td></tr>
-          <tr><td><strong>Environment Vars</strong></td><td>Passwörter direkt im Code oder Dockerfile => wer den Code klont sieht das Passwort</td><td><code>.env</code> Datei benutzen => wird nicht ins Git committed</td></tr>
-        </table></div>
-        <p class="sources">Quellen: <a href="https://www.johner-institut.de/blog/iec-62304-medizinische-software/funktionale-und-nicht-funktionale-anforderungen/">johner-institut</a></p>
-      </div>
+  <p>
+    Bevor wir auch nur eine Zeile Code oder eine Zeile YAML schreiben, müssen
+    wir wissen <strong>was</strong> die App können soll und
+    <strong>wie</strong> sie sich verhalten soll. Das ist der Unterschied
+    zwischen funktionalen und nicht-funktionalen Anforderungen:
+  </p>
+  <p>
+    <strong>Funktionale Anforderungen</strong> beschreiben konkrete Features
+    — was der User tun kann.<br />
+    <strong>Nicht-funktionale Anforderungen</strong> beschreiben
+    Qualitätseigenschaften — wie das System sich verhalten soll (Sicherheit,
+    Stabilität, Portabilität).
+  </p>
+  <p>
+    Ohne diese Anforderungen wüssten wir nicht: Wie viele Container brauchen
+    wir? Welche Ports müssen offen sein? Muss die Datenbank von aussen
+    erreichbar sein? Wie soll das System bei einem Absturz reagieren?
+  </p>
 
-      <!-- B1E -->
-      <div class="content-block reveal">
-        <h3><span class="tag">B1E</span> Kompositions-Varianten</h3>
-        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann mindestens 2 Container-Kompositions-Varianten vorschlagen, vergleichen und die gewählte Variante begründen.</div>
-        <p>Wir haben 3 Möglichkeiten verglichen wie man die App aufbauen könnte:</p>
-        <div class="table-wrap"><table>
-          <tr><th>Kriterium</th><th>Monolith</th><th>Docker Compose</th><th>Kubernetes</th></tr>
-          <tr><td>Was ist das?</td><td>Alles in einem Container</td><td>3 separate Container, ein YAML</td><td>Jeder Dienst als Pod</td></tr>
-          <tr><td>Skalierbarkeit</td><td>Geht nicht</td><td>Pro Container, ein Host</td><td>Volle Skalierung</td></tr>
-          <tr><td>Komplexität</td><td>Super einfach</td><td>Geht klar</td><td>Ziemlich komplex</td></tr>
-          <tr><td>Wartbarkeit</td><td>Mühsam</td><td>Gut</td><td>Sehr gut</td></tr>
-          <tr><td>Wofür?</td><td>Schnelle Demos</td><td>Entwicklung, Lernen</td><td>Produktion</td></tr>
-        </table></div>
+  <h4>Unser Projekt: DevBoard</h4>
+  <p>
+    DevBoard ist ein einfaches Task-Board — man kann Aufgaben erstellen,
+    anzeigen und löschen. Simpel, aber ideal um alle Container-Konzepte
+    (Frontend, Backend, Datenbank, Netzwerke, Volumes) zu demonstrieren.
+  </p>
 
-        <h4>Vor- und Nachteile der Varianten</h4>
-        <p><strong>Variante 1 – Monolith:</strong></p>
-        <div class="pro-con">
-          <div class="pro"><h5>✓ Vorteile</h5><p>Extrem einfach zu starten, ein einziger <code>docker run</code> Befehl reicht</p></div>
-          <div class="con"><h5>✗ Nachteile</h5><p>Widerspricht dem Container-Prinzip "ein Prozess pro Container". Wenn Flask abstürzt, reisst es Nginx und PostgreSQL mit. Nicht skalierbar.</p></div>
-        </div>
-        <p><strong>Variante 2 – Docker Compose (unser Entscheid):</strong></p>
-        <div class="pro-con">
-          <div class="pro"><h5>✓ Vorteile</h5><p>Jeder Service läuft isoliert, kann einzeln neu gestartet werden. Netzwerktrennung möglich. Eine YAML-Datei reicht für alles.</p></div>
-          <div class="con"><h5>✗ Nachteile</h5><p>Läuft nur auf einem Host — kein automatisches Verteilen auf mehrere Maschinen möglich.</p></div>
-        </div>
-        <p><strong>Variante 3 – Kubernetes:</strong></p>
-        <div class="pro-con">
-          <div class="pro"><h5>✓ Vorteile</h5><p>Auto-Scaling, Self-Healing, Rolling Updates ohne Downtime. Für grosse Produktionssysteme der Standard.</p></div>
-          <div class="con"><h5>✗ Nachteile</h5><p>Cluster-Setup, Deployments, Services, Ingress-Config — massiver Overkill für 3 Container auf einem Laptop.</p></div>
-        </div>
-        <p><strong>Unser Entscheid: Docker Compose.</strong> Für DevBoard brauchen wir die Trennung in 3 Container (damit die DB nicht von aussen erreichbar ist), aber keinen Kubernetes-Cluster. Beste Balance für ein Lernprojekt.</p>
-      </div>
+  <h4>Funktionale Anforderungen</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>ID</th><th>Anforderung</th><th>Warum wichtig?</th></tr>
+      <tr>
+        <td>FA-1</td>
+        <td>Tasks anzeigen — alle vorhandenen Tasks werden beim Öffnen der App sofort geladen und angezeigt</td>
+        <td>Kernfunktion der App — ohne Anzeige ist das Board nutzlos</td>
+      </tr>
+      <tr>
+        <td>FA-2</td>
+        <td>Tasks erstellen — neue Aufgabe mit Titel über ein Eingabefeld anlegen (auch per Enter-Taste)</td>
+        <td>Ohne Erstellen gibt es keine Tasks zum Anzeigen</td>
+      </tr>
+      <tr>
+        <td>FA-3</td>
+        <td>Tasks löschen — jeder Task hat einen Löschen-Button der ihn sofort aus der Liste entfernt</td>
+        <td>Abgeschlossene Tasks sollen nicht das Board zumüllen</td>
+      </tr>
+      <tr>
+        <td>FA-4</td>
+        <td>Persistente Datenhaltung — Tasks bleiben nach einem Neustart der Container erhalten</td>
+        <td>Ohne Persistenz verliert man alle Daten bei jedem <code>docker compose down</code></td>
+      </tr>
+      <tr>
+        <td>FA-5</td>
+        <td>REST API — Frontend kommuniziert über HTTP-Endpoints mit dem Backend (GET /api/tasks, POST /api/tasks, DELETE /api/tasks/:id)</td>
+        <td>Trennung von Frontend und Backend ermöglicht unabhängige Container</td>
+      </tr>
+      <tr>
+        <td>FA-6</td>
+        <td>Health-Check Endpoint — <code>/api/health</code> gibt Auskunft ob Backend und DB-Verbindung funktionieren</td>
+        <td>Docker braucht einen Endpoint um den Container-Zustand zu prüfen</td>
+      </tr>
+    </table>
+  </div>
 
-      <!-- B2E -->
-      <div class="content-block reveal">
-        <h3><span class="tag">B2E</span> Netzwerkdiagramm</h3>
-        <div class="lernziel"><span>SMART-Lernziel</span>Ich kann ein vollständiges Netzwerkdiagramm erstellen, das alle Container, Netzwerke, Ports und den Datenfluss zeigt.</div>
-        <p>Um zu zeigen wie unsere Container miteinander verbunden sind, haben wir ein Netzwerkdiagramm erstellt:</p>
-        <div class="tip">Dieses Netzwerkdiagramm wurde erstellt mit <a href="https://app.diagrams.net/"><strong>draw.io</strong></a>.</div>
-        <div class="screenshot">
-          <iframe src="https://drive.google.com/file/d/1iV1Ap4qan_PqZACLRBSSyXkKFDjdfJpd/preview" width="640" height="480"></iframe>
-          <div class="caption"><span class="caption-text">Netzwerkdiagramm — zeigt alle 3 Container (Nginx, Flask, PostgreSQL), die 2 Docker-Netzwerke und den Datenfluss vom Browser bis zur Datenbank</span></div>
-        </div>
-        <div class="what-you-see">
-          <strong>Was man im Diagramm sieht:</strong> Oben das frontend-network (blau) mit Nginx und Flask — dieses Netzwerk ist über Port 8080 von aussen erreichbar. Unten das backend-network (rot) mit Flask und PostgreSQL — dieses ist <code>internal: true</code> und hat keinen Internetzugang. Flask ist in beiden Netzwerken und ist damit die einzige Brücke. Das pgdata Volume (grau) hängt an PostgreSQL und sorgt für persistente Datenspeicherung.
-        </div>
-        <p><strong>Warum zwei Netzwerke?</strong> Das frontend-network ist nach aussen exponiert (Port 8080), aber das backend-network ist komplett intern. PostgreSQL ist nie direkt vom Browser erreichbar — nur Flask kann mit der DB reden.</p>
-      </div>
-    </section>
+  <h4>Nicht-funktionale Anforderungen</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>ID</th><th>Anforderung</th><th>Warum wichtig?</th></tr>
+      <tr>
+        <td>NFA-1</td>
+        <td>Containerisiert — jeder Dienst (Nginx, Flask, PostgreSQL) läuft in einem eigenen isolierten Container</td>
+        <td>Container-Prinzip: ein Prozess pro Container. Fällt einer aus, laufen die anderen weiter</td>
+      </tr>
+      <tr>
+        <td>NFA-2</td>
+        <td>Reproduzierbar — ein einziges <code>docker compose up --build -d</code> startet die gesamte App auf jedem System</td>
+        <td>Kein "läuft nur auf meinem PC" Problem — jeder im Team kann die App starten</td>
+      </tr>
+      <tr>
+        <td>NFA-3</td>
+        <td>Netzwerk-Isolation — die Datenbank ist nur über das interne backend-network erreichbar, nie direkt vom Internet</td>
+        <td>Sicherheit: PostgreSQL soll nicht von aussen angreifbar sein, nur Flask darf mit der DB reden</td>
+      </tr>
+      <tr>
+        <td>NFA-4</td>
+        <td>Daten-Persistenz — DB-Daten werden auf einem Docker Named Volume (<code>pgdata</code>) gespeichert, nicht im Container</td>
+        <td>Container sind flüchtig — Volumes überleben einen Container-Neustart</td>
+      </tr>
+      <tr>
+        <td>NFA-5</td>
+        <td>Portabilität — die App läuft auf jedem Betriebssystem das Docker unterstützt (Windows, macOS, Linux)</td>
+        <td>Kein Abhängigkeit von einem spezifischen OS oder installierter Software ausser Docker</td>
+      </tr>
+      <tr>
+        <td>NFA-6</td>
+        <td>Secrets-Management — Datenbankpasswörter und Credentials werden nie in den Code oder das Dockerfile geschrieben, sondern über <code>.env</code> Dateien übergeben</td>
+        <td>Sicherheit: wer den Code klont sieht keine Passwörter. <code>.env</code> wird nicht ins Git committed</td>
+      </tr>
+    </table>
+  </div>
+
+  <h4>Technologie-Entscheid</h4>
+  <p>Basierend auf den Anforderungen haben wir folgende Technologien gewählt:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Komponente</th><th>Technologie</th><th>Begründung</th><th>Alternative</th></tr>
+      <tr>
+        <td>Frontend</td>
+        <td>Nginx + statisches HTML/JS</td>
+        <td>Kein Build-Step nötig, Nginx kann gleichzeitig als Reverse Proxy für die API dienen</td>
+        <td>React (zu komplex für dieses Lernprojekt)</td>
+      </tr>
+      <tr>
+        <td>Backend</td>
+        <td>Python Flask</td>
+        <td>Minimaler Boilerplate, in ~80 Zeilen haben wir eine vollständige REST API</td>
+        <td>Node.js Express (ähnlich simpel, aber Python ist vertrauter)</td>
+      </tr>
+      <tr>
+        <td>Datenbank</td>
+        <td>PostgreSQL 16</td>
+        <td>Robust, Open Source, offizielles Docker Image mit alpine-Variante verfügbar</td>
+        <td>SQLite (kein eigener Container nötig, aber kein Production-Einsatz)</td>
+      </tr>
+      <tr>
+        <td>Orchestrierung</td>
+        <td>Docker Compose</td>
+        <td>Alles in einer YAML-Datei, ideal für Multi-Container auf einem Host</td>
+        <td>Kubernetes (viel zu komplex für dieses Projekt)</td>
+      </tr>
+    </table>
+  </div>
+  <p class="sources">
+    Quellen:
+    <a href="https://visuresolutions.com/de/Almf%C3%BChrer/funktionale-vs.-nicht-funktionale-Anforderungen/">visuresolutions.com – Funktionale vs. Nicht-funktionale Anforderungen</a>
+  </p>
+</div>
 
     <div class="divider"></div>
     <div class="phase-sep" id="phase2"><div class="num">02</div><h2 class="reveal">Phase 2: <span>Cloud &amp; Registries</span></h2></div>
